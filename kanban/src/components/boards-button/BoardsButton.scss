@@ -1,0 +1,25 @@
+.boards-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    height: 100%;
+
+    cursor: pointer;
+
+    &:hover {
+        .boards-button__icon,
+        .boards-button__title {
+            color: black;
+        }
+    }
+}
+
+.boards-button__icon {
+    color: lightgrey;
+    margin-right: 1rem;
+}
+
+.boards-button__title {
+    color: lightgrey;
+}

@@ -1,25 +1,15 @@
 import React from 'react';
 
+import { BoardsButton } from '../boards-button/BoardsButton';
+import { Search } from '../search/Search';
+
 import './Navbar.scss';
 
-const Navbar = ({ name, setName }) => {
-    const links = ['Nills', 'Charlie', 'Kay'];
-
-    const handleCLick = (link) => {
-        console.log(link);
-        setName(link);
-    };
-
+const Navbar = () => {
     return (
         <nav className="navbar">
-            Navigation {name}
-            <ul>
-                {links.map((link) => (
-                    <button key={link} onClick={() => handleCLick(link)}>
-                        {link}
-                    </button>
-                ))}
-            </ul>
+            <BoardsButton />
+            <Search />
         </nav>
     );
 };
