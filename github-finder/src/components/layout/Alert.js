@@ -1,6 +1,10 @@
-import React from 'react';
+import React, { useContext } from 'react';
 
-export default function Alert({ alert }) {
+import AlertContext from '../../context/alert/alertContext';
+
+export default function Alert() {
+    const { alert } = useContext(AlertContext);
+
     return (
         alert !== null && (
             <div className={`alert ${alert.type}`}>
