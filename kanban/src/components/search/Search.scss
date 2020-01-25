@@ -12,10 +12,6 @@
 
     &:focus {
         outline: none;
-
-        .search__icon {
-            color: black;
-        }
     }
 }
 
@@ -23,4 +19,8 @@
     position: absolute;
     left: 5px;
     color: lightgrey;
+}
+
+.search__icon--active {
+    color: black;
 }
