@@ -5,13 +5,15 @@ import { Search } from '../search/Search';
 
 import './Navbar.scss';
 
-const Navbar = () => {
+export const Navbar = () => {
+    const state = {
+        search: '',
+    };
+
     return (
         <nav className="navbar">
             <BoardsButton />
-            <Search />
+            <Search search={state.search} />
         </nav>
     );
 };
-
-export default Navbar;
