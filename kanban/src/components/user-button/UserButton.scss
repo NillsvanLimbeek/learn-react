@@ -1,0 +1,26 @@
+.user-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    flex: 0 0 15rem;
+
+    cursor: pointer;
+
+    &:hover {
+        .user-button__text {
+            color: var(--color-black);
+        }
+    }
+}
+
+.user-button img {
+    height: 50%;
+    border-radius: 3px;
+    margin-right: 1rem;
+}
+
+.user-button__text {
+    font-size: 1.5rem;
+    color: var(--color-grey);
+}

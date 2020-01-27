@@ -1,0 +1,21 @@
+.menu-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    flex: 0 0 7rem;
+    height: 100%;
+
+    border-left: 1px solid rgba(128, 128, 128, 0.25);
+    cursor: pointer;
+
+    &:hover {
+        .menu-button__bars {
+            color: var(--color-black);
+        }
+    }
+}
+
+.menu-button__bars {
+    color: var(--color-grey);
+}
