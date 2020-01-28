@@ -8,19 +8,19 @@ import { MenuButton } from '../menu-button/MenuButton';
 
 import './Navbar.scss';
 
-export const Navbar = () => {
+export const Navbar = ({ boards }) => {
     const state = {
         search: '',
     };
 
     return (
         <nav className="navbar">
-            <BoardsButton />
+            <BoardsButton boards={boards} />
             <Search search={state.search} />
 
             <div className="navbar__logo">
                 <div className="navbar__link">
-                    <i className="fab fa-trello"></i> Trello
+                    <i className="fab fa-trello" /> Trello
                 </div>
             </div>
 

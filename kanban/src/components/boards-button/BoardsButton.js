@@ -2,9 +2,10 @@ import React, { useState } from 'react';
 
 import './BoardsButton.scss';
 
-import { Modal } from '../modals/Modal';
+import { Modal } from '../modal/Modal';
+import { BoardListButton } from '../board-list-button/BoardListButton';
 
-export const BoardsButton = () => {
+export const BoardsButton = ({ boards }) => {
     const [modal, setModal] = useState(false);
 
     return (
@@ -16,7 +17,11 @@ export const BoardsButton = () => {
 
             {modal && (
                 <Modal closeModal={() => setModal(false)}>
-                    <p>Modal</p>
+                    <h2>Workspaces</h2>
+
+                    {boards.map((board) => (
+                        <BoardListButton board={board} key={board.title} />
+                    ))}
                 </Modal>
             )}
         </div>

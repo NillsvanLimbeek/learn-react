@@ -7,7 +7,8 @@
     height: 100vh;
     width: 30rem;
 
-    background: white;
+    background: var(--color-white);
+    padding: 5rem 1rem;
     border-bottom: 1px solid rgba(128, 128, 128, 0.25);
     box-shadow: 5px 0 5px rgba(0, 0, 0, 0.1);
     cursor: auto;

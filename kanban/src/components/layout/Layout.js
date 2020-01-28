@@ -10,22 +10,22 @@ export const Layout = () => {
         boards: [
             {
                 title: 'Board 1',
-                color: 'blue',
+                color: '#4860ff',
             },
             {
                 title: 'Board 2',
-                color: 'red',
+                color: '#fb617f',
             },
             {
                 title: 'Board 3',
-                color: 'green',
+                color: '#fed64d',
             },
         ],
     };
 
     return (
         <div className="layout">
-            <Navbar />
+            <Navbar boards={state.boards} />
 
             <main>
                 {state.boards.map((board) => (

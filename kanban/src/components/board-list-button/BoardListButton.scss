@@ -1,0 +1,43 @@
+.board-list-button {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    width: 85%;
+
+    padding: 1rem 1.5rem;
+}
+
+.board-list-button__main {
+    display: flex;
+    align-items: center;
+}
+
+.board-list-button__square {
+    font-size: 3.5rem;
+    margin-right: 1.5rem;
+}
+
+.board-list-button__title {
+    margin: 0;
+    font-weight: 500;
+}
+
+.board-list-button__trash {
+    color: var(--color-grey);
+    margin-right: 5px;
+    cursor: pointer;
+
+    &:hover {
+        color: var(--color-black);
+    }
+}
+
+.board-list-button__star {
+    color: var(--color-grey);
+    cursor: pointer;
+
+    &:hover {
+        color: var(--color-yellow);
+    }
+}
