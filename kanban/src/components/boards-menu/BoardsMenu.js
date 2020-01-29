@@ -1,19 +1,19 @@
 import React, { useState } from 'react';
 
-import './BoardsButton.scss';
+import './BoardsMenu.scss';
 
 import { Modal } from '../modal/Modal';
 import { BoardListButton } from '../board-list-button/BoardListButton';
 
-export const BoardsButton = ({ boards }) => {
+export const BoardsMenu = ({ boards }) => {
     const [modal, setModal] = useState(false);
 
     return (
-        <div className="boards-button">
-            <i className="boards-button__icon fas fa-th" />
-            <p className="boards-button__title" onClick={() => setModal(true)}>
-                Boards
-            </p>
+        <div className="boards-menu">
+            <div className="boards-menu__button" onClick={() => setModal(true)}>
+                <i className="boards-menu__icon fas fa-th" />
+                <p className="boards-menu__title">Boards</p>
+            </div>
 
             {modal && (
                 <Modal closeModal={() => setModal(false)}>

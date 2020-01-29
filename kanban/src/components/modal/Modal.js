@@ -2,14 +2,14 @@ import React from 'react';
 
 import './Modal.scss';
 
-export const Modal = (props) => {
+export const Modal = ({ children, closeModal }) => {
     return (
         <div className="modal">
             <i
                 className="modal__close fas fa-times"
-                onClick={() => props.closeModal()}
+                onClick={() => closeModal()}
             />
-            {props.children}
+            {children}
         </div>
     );
 };

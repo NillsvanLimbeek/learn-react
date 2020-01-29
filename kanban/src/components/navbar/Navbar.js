@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { useContext } from 'react';
 
-import { BoardsButton } from '../boards-button/BoardsButton';
+import BoardsContext from '../../context/boardsContext';
+
+import { BoardsMenu } from '../boards-menu/BoardsMenu';
 import { Search } from '../search/Search';
 import { UserButton } from '../user-button/UserButton';
 import { NotificationsButton } from '../notifications-button/NotificationsButton';
@@ -8,14 +10,16 @@ import { MenuButton } from '../menu-button/MenuButton';
 
 import './Navbar.scss';
 
-export const Navbar = ({ boards }) => {
+export const Navbar = () => {
+    const { boards } = useContext(BoardsContext);
+
     const state = {
         search: '',
     };
 
     return (
         <nav className="navbar">
-            <BoardsButton boards={boards} />
+            <BoardsMenu boards={boards} />
             <Search search={state.search} />
 
             <div className="navbar__logo">

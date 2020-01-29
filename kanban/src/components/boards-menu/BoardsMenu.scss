@@ -1,27 +1,32 @@
-.boards-button {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.boards-menu {
     flex: 0 0 15rem;
 
     height: 100%;
 
     margin-right: 2.5rem;
     cursor: pointer;
+}
+
+.boards-menu__button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    height: 100%;
 
     &:hover {
-        .boards-button__icon,
-        .boards-button__title {
+        .boards-menu__icon,
+        .boards-menu__title {
             color: var(--color-black);
         }
     }
 }
 
-.boards-button__icon {
+.boards-menu__icon {
     color: lightgrey;
     margin-right: 1rem;
 }
 
-.boards-button__title {
+.boards-menu__title {
     color: lightgrey;
 }
