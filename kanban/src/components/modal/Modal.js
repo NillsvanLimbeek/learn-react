@@ -5,11 +5,15 @@ import './Modal.scss';
 export const Modal = ({ children, closeModal }) => {
     return (
         <div className="modal">
-            <i
-                className="modal__close fas fa-times"
-                onClick={() => closeModal()}
-            />
-            {children}
+            <div className="modal__body">
+                <i
+                    className="modal__close fas fa-times"
+                    onClick={() => closeModal()}
+                />
+                {children}
+            </div>
+
+            <div className="modal__background" />
         </div>
     );
 };
