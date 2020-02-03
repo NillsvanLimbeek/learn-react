@@ -9,14 +9,17 @@ const BoardState = (props) => {
             {
                 title: 'Board 1',
                 color: '#4860ff',
+                favorite: false,
             },
             {
                 title: 'Board 2',
                 color: '#fb617f',
+                favorite: false,
             },
             {
                 title: 'Board 3',
                 color: '#fed64d',
+                favorite: false,
             },
         ],
         search: '',

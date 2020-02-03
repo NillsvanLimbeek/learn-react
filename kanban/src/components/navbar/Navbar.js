@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useState, useContext } from 'react';
 
 import BoardsContext from '../../context/boardsContext';
 
@@ -11,12 +11,14 @@ import { MenuButton } from '../menu-button/MenuButton';
 import './Navbar.scss';
 
 export const Navbar = () => {
-    const { boards, search } = useContext(BoardsContext);
+    const { boards } = useContext(BoardsContext);
+
+    const [search, setSearch] = useState('');
 
     return (
         <nav className="navbar">
             <BoardsMenu boards={boards} />
-            <Search withModal search={search} />
+            <Search withModal search={search} onSearch={setSearch} />
 
             <div className="navbar__logo">
                 <div className="navbar__link">

@@ -2,16 +2,15 @@ import React, { useState, useEffect } from 'react';
 
 import './Search.scss';
 
-export const Search = ({ search, withModal = false }) => {
-    const [searchValue, setSearchValue] = useState(search);
+export const Search = ({ search, onSearch, withModal = false }) => {
     const [showModal, setShowModal] = useState(false);
 
     useEffect(() => {
-        searchValue.length > 0 ? setShowModal(true) : setShowModal(false);
-    }, [searchValue]);
+        search.length > 0 ? setShowModal(true) : setShowModal(false);
+    }, [search]);
 
     const onChange = (e) => {
-        setSearchValue(e.target.value);
+        onSearch(e.target.value);
     };
 
     return (
@@ -25,7 +24,7 @@ export const Search = ({ search, withModal = false }) => {
                 type="text"
                 name="search"
                 placeholder="Search..."
-                value={searchValue}
+                value={search}
                 onChange={onChange}
             />
 

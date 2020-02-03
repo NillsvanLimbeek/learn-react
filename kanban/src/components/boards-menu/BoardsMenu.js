@@ -1,25 +1,21 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import './BoardsMenu.scss';
-
-import BoardsContext from '../../context/boardsContext';
 
 import { Search } from '../search/Search';
 import { Modal } from '../modal/Modal';
 import { BoardListButton } from '../board-list-button/BoardListButton';
 
 export const BoardsMenu = ({ boards }) => {
-    const { search } = useContext(BoardsContext);
-
     const [modal, setModal] = useState(false);
-    const [filterBoards, setFilterBoards] = useState(boards);
+    const [search, setSearch] = useState('');
+    const [filtererdBoards, setFilteredBoards] = useState(boards);
 
     useEffect(() => {
-        const searchBoards = boards.filter((x) => x.title.includes(search));
-        if (searchBoards.length > 0) {
-            setFilterBoards(searchBoards);
-        }
-    }, [boards, search]);
+        setFilteredBoards(
+            boards.filter((board) => board.title.includes(search)),
+        );
+    }, [search, boards]);
 
     return (
         <div className="boards-menu">
@@ -31,17 +27,13 @@ export const BoardsMenu = ({ boards }) => {
             {modal && (
                 <Modal closeModal={() => setModal(false)}>
                     <div className="boards-menu__modal">
-                        <Search search={search} />
+                        <Search search={search} onSearch={setSearch} />
 
                         <h3>Boards</h3>
 
-                        {boards.map((board) => (
+                        {filtererdBoards.map((board) => (
                             <BoardListButton board={board} key={board.title} />
                         ))}
-
-                        <h3>Search</h3>
-                        {filterBoards &&
-                            filterBoards.map((board) => board.title)}
                     </div>
                 </Modal>
             )}
