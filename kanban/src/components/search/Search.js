@@ -2,13 +2,12 @@ import React, { useState, useEffect } from 'react';
 
 import './Search.scss';
 
-export const Search = ({ search }) => {
-    const [active, setActive] = useState(false);
+export const Search = ({ search, withModal = false }) => {
     const [searchValue, setSearchValue] = useState(search);
-    const [modal, setModal] = useState(false);
+    const [showModal, setShowModal] = useState(false);
 
     useEffect(() => {
-        searchValue.length > 0 ? setModal(true) : setModal(false);
+        searchValue.length > 0 ? setShowModal(true) : setShowModal(false);
     }, [searchValue]);
 
     const onChange = (e) => {
@@ -17,12 +16,7 @@ export const Search = ({ search }) => {
 
     return (
         <div className="search">
-            <label
-                className={`search__icon ${
-                    active ? 'search__icon--active' : ''
-                }`}
-                htmlFor="search"
-            >
+            <label className="search__icon" htmlFor="search">
                 <i className="fas fa-search" />
             </label>
 
@@ -32,12 +26,10 @@ export const Search = ({ search }) => {
                 name="search"
                 placeholder="Search..."
                 value={searchValue}
-                onFocus={() => setActive(true)}
-                onBlur={() => setActive(false)}
                 onChange={onChange}
             />
 
-            {modal && (
+            {withModal && showModal && (
                 <div className="search__modal">
                     <div className="search__modal-body">Test</div>
                     <div className="search__modal-background" />

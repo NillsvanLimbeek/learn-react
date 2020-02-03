@@ -11,16 +11,12 @@ import { MenuButton } from '../menu-button/MenuButton';
 import './Navbar.scss';
 
 export const Navbar = () => {
-    const { boards } = useContext(BoardsContext);
-
-    const state = {
-        search: '',
-    };
+    const { boards, search } = useContext(BoardsContext);
 
     return (
         <nav className="navbar">
             <BoardsMenu boards={boards} />
-            <Search search={state.search} />
+            <Search withModal search={search} />
 
             <div className="navbar__logo">
                 <div className="navbar__link">

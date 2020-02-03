@@ -19,6 +19,7 @@ const BoardState = (props) => {
                 color: '#fed64d',
             },
         ],
+        search: '',
     };
 
     // TODO
@@ -29,6 +30,7 @@ const BoardState = (props) => {
         <BoardsContext.Provider
             value={{
                 boards: state.boards,
+                search: state.search,
             }}
         >
             {props.children}
