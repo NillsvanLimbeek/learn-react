@@ -41,3 +41,11 @@
         color: var(--color-yellow);
     }
 }
+
+.board-list-button__star--active {
+    color: var(--color-yellow);
+
+    &:hover {
+        color: var(--color-yellow-dark);
+    }
+}

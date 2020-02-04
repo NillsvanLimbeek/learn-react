@@ -3,7 +3,7 @@ import React, { useReducer } from 'react';
 import BoardsContext from './boardsContext';
 import BoardsReducer from './boardsReducer';
 
-const BoardState = (props) => {
+export const BoardState = (props) => {
     const initalState = {
         boards: [
             {
@@ -22,18 +22,38 @@ const BoardState = (props) => {
                 favorite: false,
             },
         ],
-        search: '',
     };
 
-    // TODO
-    // eslint-disable-next-line
     const [state, dispatch] = useReducer(BoardsReducer, initalState);
+
+    const addBoard = (board) => {
+        dispatch({
+            type: 'ADD_BOARD',
+            payload: board,
+        });
+    };
+
+    const removeBoard = (id) => {
+        dispatch({
+            type: 'REMOVE_BOARD',
+            payload: id,
+        });
+    };
+
+    const favoriteBoard = (id) => {
+        dispatch({
+            type: 'FAVORITE_BOARD',
+            payload: id,
+        });
+    };
 
     return (
         <BoardsContext.Provider
             value={{
                 boards: state.boards,
-                search: state.search,
+                addBoard,
+                removeBoard,
+                favoriteBoard,
             }}
         >
             {props.children}
