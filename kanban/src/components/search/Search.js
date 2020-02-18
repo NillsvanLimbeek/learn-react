@@ -6,7 +6,7 @@ export const Search = ({ search, onSearch, withModal = false }) => {
     const [showModal, setShowModal] = useState(false);
 
     useEffect(() => {
-        search.length > 0 ? setShowModal(true) : setShowModal(false);
+        return search.length > 0 ? setShowModal(true) : setShowModal(false);
     }, [search]);
 
     const onChange = (e) => {

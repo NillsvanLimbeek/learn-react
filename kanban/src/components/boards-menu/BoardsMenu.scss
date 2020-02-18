@@ -31,15 +31,21 @@
     color: lightgrey;
 }
 
-.boards-menu__modal {
+.boards-menu__menu {
     padding: 1rem 2.5rem;
 }
 
 .boards-menu__add {
     padding: 1rem 1.5rem;
+    color: var(--color-grey-dark);
+    cursor: pointer;
+
+    &:hover {
+        color: var(--color-black);
+    }
 }
 
-.boards-menu__plus {
+.boards-menu__add i {
     padding: 7.5px;
     margin-right: 1rem;
     border: 1px dashed var(--color-grey-dark);
