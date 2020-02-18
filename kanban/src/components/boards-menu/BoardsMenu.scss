@@ -34,3 +34,15 @@
 .boards-menu__modal {
     padding: 1rem 2.5rem;
 }
+
+.boards-menu__add {
+    padding: 1rem 1.5rem;
+}
+
+.boards-menu__plus {
+    padding: 7.5px;
+    margin-right: 1rem;
+    border: 1px dashed var(--color-grey-dark);
+    border-radius: 3px;
+    color: var(--color-grey-dark);
+}

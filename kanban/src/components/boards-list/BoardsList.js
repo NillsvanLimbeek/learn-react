@@ -14,6 +14,12 @@ export const BoardsList = () => {
             {boards.map((board) => (
                 <BoardCard board={board} key={board.title} />
             ))}
+
+            {boards.map((board) =>
+                board.favorite ? (
+                    <BoardCard board={board} key={board.title} />
+                ) : null,
+            )}
         </div>
     );
 };

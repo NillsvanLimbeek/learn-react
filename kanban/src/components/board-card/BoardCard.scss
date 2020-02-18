@@ -1,4 +1,7 @@
 .board-card {
+    display: flex;
+    justify-content: space-between;
+
     height: 5rem;
 
     padding: 1rem;

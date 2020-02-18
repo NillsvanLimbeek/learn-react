@@ -9,6 +9,8 @@ export const BoardCard = ({ board }) => {
             style={{ border: `1px solid ${board.color}` }}
         >
             {board.title}
+
+            {board.favorite && <i className="boards-card__star fas fa-star" />}
         </div>
     );
 };
