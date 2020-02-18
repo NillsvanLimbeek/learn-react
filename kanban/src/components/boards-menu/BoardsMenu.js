@@ -6,12 +6,14 @@ import { SideMenu } from '../side-menu/SideMenu';
 import { Search } from '../search/Search';
 import { Modal } from '../modal/Modal';
 import { BoardListButton } from '../board-list-button/BoardListButton';
+import { BaseInput } from '../base-input/BaseInput';
 
 export const BoardsMenu = ({ boards }) => {
     const [sideMenu, setSideMenu] = useState(false);
     const [modal, setModal] = useState(false);
     const [search, setSearch] = useState('');
     const [filtererdBoards, setFilteredBoards] = useState(boards);
+    const [value, setValue] = useState('');
 
     useEffect(() => {
         return setFilteredBoards(
@@ -19,10 +21,10 @@ export const BoardsMenu = ({ boards }) => {
         );
     }, [search, boards]);
 
-    function openModal() {
+    const openModal = () => {
         setSideMenu(false);
         setModal(true);
-    }
+    };
 
     return (
         <div className="boards-menu">
@@ -52,7 +54,17 @@ export const BoardsMenu = ({ boards }) => {
                 </SideMenu>
             )}
 
-            {modal && <Modal closeModal={() => setModal(false)}>Test</Modal>}
+            {modal && (
+                <Modal closeModal={() => setModal(false)}>
+                    <div className="create-board">
+                        <BaseInput
+                            label={'Board Name'}
+                            value={value}
+                            onInput={setValue}
+                        />
+                    </div>
+                </Modal>
+            )}
         </div>
     );
 };

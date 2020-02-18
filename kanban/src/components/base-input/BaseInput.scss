@@ -1,0 +1,24 @@
+.base-input {
+    position: relative;
+}
+
+.base-input__label {
+    position: absolute;
+    left: 5px;
+    top: 8px;
+
+    font-size: 1.4rem;
+    background: white;
+    transition: all 0.2s ease-in-out;
+    padding: 0 2.5px;
+}
+
+.base-input input {
+    padding: 5px 1rem;
+}
+
+.base-input__label--active {
+    font-size: 1.25rem;
+    transform: translateY(-1.75rem);
+    transition: all 0.2s ease-in-out;
+}
