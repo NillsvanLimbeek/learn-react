@@ -10,16 +10,19 @@ export const BoardState = (props) => {
                 title: 'Board 1',
                 color: '#4860ff',
                 favorite: false,
+                id: 1,
             },
             {
                 title: 'Board 2',
                 color: '#fb617f',
                 favorite: false,
+                id: 2,
             },
             {
                 title: 'Board 3',
                 color: '#fed64d',
                 favorite: false,
+                id: 3,
             },
         ],
     };

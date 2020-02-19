@@ -1,4 +1,5 @@
 import React, { useContext } from 'react';
+import { Link } from 'react-router-dom';
 
 import './BoardsList.scss';
 
@@ -12,12 +13,14 @@ export const BoardsList = () => {
     return (
         <div className="boards-list">
             {boards.map((board) => (
-                <BoardCard board={board} key={board.title} />
+                <Link to={`/boards/${board.id}`} key={board.id}>
+                    <BoardCard board={board} key={board.id} />
+                </Link>
             ))}
 
             {boards.map((board) =>
                 board.favorite ? (
-                    <BoardCard board={board} key={board.title} />
+                    <BoardCard board={board} key={board.id} />
                 ) : null,
             )}
         </div>
