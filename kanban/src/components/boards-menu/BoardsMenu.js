@@ -36,7 +36,7 @@ export const BoardsMenu = ({ boards }) => {
                         <h3>Boards</h3>
 
                         {filtererdBoards.map((board) => (
-                            <Link to={`/boards/${board.id}`} key={board.id}>
+                            <Link to={`/board/${board.id}`} key={board.id}>
                                 <BoardListButton board={board} />
                             </Link>
                         ))}

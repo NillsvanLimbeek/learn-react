@@ -8,7 +8,7 @@ export const BoardCard = ({ board }) => {
             className="board-card"
             style={{ border: `1px solid ${board.color}` }}
         >
-            {board.title}
+            <p className="board-card__title">{board.title}</p>
 
             {board.favorite && <i className="boards-card__star fas fa-star" />}
         </div>

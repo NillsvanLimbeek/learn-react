@@ -1,4 +1,5 @@
 import React, { useState, useContext } from 'react';
+import { Link } from 'react-router-dom';
 
 import BoardsContext from '../../context/boardsContext';
 
@@ -20,11 +21,11 @@ export const Navbar = () => {
             <BoardsMenu boards={boards} />
             <Search withModal search={search} onSearch={setSearch} />
 
-            <div className="navbar__logo">
+            <Link to="/" className="navbar__logo">
                 <div className="navbar__link">
                     <i className="fab fa-trello" /> Trello
                 </div>
-            </div>
+            </Link>
 
             <UserButton />
             <NotificationsButton />

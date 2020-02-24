@@ -13,7 +13,7 @@ export const BoardsList = () => {
     return (
         <div className="boards-list">
             {boards.map((board) => (
-                <Link to={`/boards/${board.id}`} key={board.id}>
+                <Link to={`/board/${board.id}`} key={board.id}>
                     <BoardCard board={board} key={board.id} />
                 </Link>
             ))}

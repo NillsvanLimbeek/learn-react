@@ -19,7 +19,7 @@ export const Layout = () => {
                     <main>
                         <Switch>
                             <Route path="/" exact component={BoardsList} />
-                            <Route path="/boards/:id" component={Board} />
+                            <Route path="/board/:id" component={Board} />
                         </Switch>
                     </main>
                 </div>
