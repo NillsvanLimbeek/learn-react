@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
 
-import BoardsContext from '../../context/boardsContext';
+import BoardsContext from '../../context/boards/boardsContext';
 
 import { BoardsMenu } from '../boards-menu/BoardsMenu';
 import { Search } from '../search/Search';

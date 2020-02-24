@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 
 import './BoardsMenu.scss';
 
@@ -12,11 +12,23 @@ export const BoardsMenu = ({ boards }) => {
     const [search, setSearch] = useState('');
     const [filtererdBoards, setFilteredBoards] = useState(boards);
 
+    const history = useHistory();
+    const location = useLocation();
+
     useEffect(() => {
         return setFilteredBoards(
             boards.filter((board) => board.title.includes(search)),
         );
     }, [search, boards]);
+
+    const redirectTo = (id) => {
+        location.pathname.includes('board')
+            ? history.push(`${id}`)
+            : history.push(`board/${id}`);
+
+        setSideMenu(false);
+        setSearch('');
+    };
 
     return (
         <div className="boards-menu">
@@ -36,9 +48,11 @@ export const BoardsMenu = ({ boards }) => {
                         <h3>Boards</h3>
 
                         {filtererdBoards.map((board) => (
-                            <Link to={`/board/${board.id}`} key={board.id}>
-                                <BoardListButton board={board} />
-                            </Link>
+                            <BoardListButton
+                                board={board}
+                                key={board.title}
+                                redirectTo={redirectTo}
+                            />
                         ))}
 
                         <div className="boards-menu__add">

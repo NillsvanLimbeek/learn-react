@@ -1,15 +1,18 @@
 import React, { useContext } from 'react';
 
-import BoardsContext from '../../context/boardsContext';
+import BoardsContext from '../../context/boards/boardsContext';
 
 import './BoardListButton.scss';
 
-export const BoardListButton = ({ board }) => {
+export const BoardListButton = ({ board, redirectTo }) => {
     const { removeBoard, favoriteBoard } = useContext(BoardsContext);
 
     return (
         <div className="board-list-button">
-            <div className="board-list-button__main">
+            <div
+                className="board-list-button__main"
+                onClick={() => redirectTo(board.id)}
+            >
                 <i
                     className="board-list-button__square fas fa-square"
                     style={{ color: `${board.color}` }}

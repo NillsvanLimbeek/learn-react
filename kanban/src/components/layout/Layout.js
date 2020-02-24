@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 import './Layout.scss';
 
-import BoardState from '../../context/BoardsState';
+import BoardState from '../../context/boards/BoardsState';
 
 import { Navbar } from '../navbar/Navbar';
 import { BoardsList } from '../boards-list/BoardsList';

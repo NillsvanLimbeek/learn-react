@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 import './BoardsList.scss';
 
-import BoardsContext from '../../context/boardsContext';
+import BoardsContext from '../../context/boards/boardsContext';
 
 import { BoardCard } from '../board-card/BoardCard';
 

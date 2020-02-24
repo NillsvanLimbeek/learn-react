@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 
-import BoardsContext from '../../context/boardsContext';
+import BoardsContext from '../../context/boards/boardsContext';
 
 import './Board.scss';
 
