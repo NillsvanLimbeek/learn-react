@@ -10,19 +10,19 @@ export const BoardState = (props) => {
                 title: 'Board 1',
                 color: '#4860ff',
                 favorite: false,
-                id: 1,
+                id: '30165652-87a1-d438-6c08-7c14a5b7c5ae',
             },
             {
                 title: 'Board 2',
                 color: '#fb617f',
                 favorite: false,
-                id: 2,
+                id: '88c8033c-7a34-4c73-b9f0-6120a82a82f5',
             },
             {
                 title: 'Board 3',
                 color: '#fed64d',
                 favorite: false,
-                id: 3,
+                id: '83a1d38c-122f-4f8e-aa02-de0ffb3b283f',
             },
         ],
     };

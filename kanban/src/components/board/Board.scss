@@ -1,6 +1,13 @@
 .board {
     display: flex;
-    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.board__header {
+    display: flex;
+
+    margin-bottom: 2.5rem;
 }
 
 .board__square {
@@ -19,4 +26,8 @@
 .board__info p {
     margin: 0;
     font-size: 1.25rem;
+}
+
+.board__columns {
+    display: flex;
 }
