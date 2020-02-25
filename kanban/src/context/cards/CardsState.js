@@ -18,7 +18,7 @@ export const CardsState = (props) => {
             {
                 title: 'Card 2',
                 id: 'fd4ae017-f106-4f8a-bf10-a8a7ce09c342',
-                columnId: '30165652-87a1-d438-6c08-7c14a5b7c5ae',
+                columnId: 'fd97350a-3875-45ad-822a-74a5c59ff0e9',
             },
             {
                 title: 'Card 3',

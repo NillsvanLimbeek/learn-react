@@ -1,9 +1,11 @@
 .column {
     width: 20rem;
 
+    align-self: flex-start;
+
     padding: 2rem 1.5rem;
     background: var(--color-white);
-    border-radius: 3px;
+    border-radius: var(--border-radius);
     box-shadow: 3px 3px 3px 1px rgba(128, 128, 128, 0.25);
 
     &:not(:last-child) {
@@ -25,7 +27,7 @@
 
 .column__header h4 {
     margin: 0;
-    font-weight: 600;
+    font-weight: 500;
 }
 
 .column__header i:last-child {
@@ -42,4 +44,8 @@
 .column__title {
     display: flex;
     align-items: center;
+}
+
+.column__add {
+    text-align: center;
 }

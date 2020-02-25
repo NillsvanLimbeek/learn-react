@@ -8,20 +8,36 @@ import './Board.scss';
 import { Column } from '../column/Column';
 
 export const Board = ({ match }) => {
-    const [board, setBoard] = useState({});
-
     const { boards } = useContext(BoardsContext);
     const { columns } = useContext(ColumnsContext);
 
+    const [board, setBoard] = useState({});
+    const [filteredColumns, setFilteredColumns] = useState([]);
+
     useEffect(() => {
+        // find board
         const board = boards.find((board) => board.id === match.params.id);
 
         if (board) {
             setBoard(board);
+
+            // find columns
+            const filteredColumns = columns.filter(
+                (column) => column.boardId === board.id,
+            );
+
+            if (filteredColumns.length) {
+                setFilteredColumns(filteredColumns);
+            }
         }
-    }, [match, boards]);
+
+        return () => {
+            setFilteredColumns([]);
+        };
+    }, [match, boards, columns]);
 
     return (
+        // TODO loading if board is being fetched
         <div className="board">
             <div className="board__header">
                 <div
@@ -39,9 +55,11 @@ export const Board = ({ match }) => {
             </div>
 
             <div className="board__columns">
-                {columns.map((column) => (
+                {filteredColumns.map((column) => (
                     <Column column={column} key={column.id} />
                 ))}
+
+                <div className="board__add">Add Column</div>
             </div>
         </div>
     );

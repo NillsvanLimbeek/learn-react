@@ -14,7 +14,7 @@
     height: 4rem;
     width: 4rem;
 
-    border-radius: 3px;
+    border-radius: var(--border-radius);
     margin-right: 1.5rem;
 }
 
@@ -30,4 +30,22 @@
 
 .board__columns {
     display: flex;
+}
+
+.board__add {
+    align-self: flex-start;
+
+    width: 20rem;
+
+    padding: 2rem 1.5rem;
+    text-align: center;
+    background: var(--color-white);
+    border-radius: var(--border-radius);
+    box-shadow: 3px 3px 3px 1px rgba(128, 128, 128, 0.25);
+    color: var(--color-grey-dark);
+    cursor: pointer;
+
+    &:hover {
+        color: var(--color-black);
+    }
 }
