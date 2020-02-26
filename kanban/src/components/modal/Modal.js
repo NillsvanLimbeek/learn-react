@@ -1,19 +1,16 @@
-import React from 'react';
+import ReactDOM from 'react-dom';
+import { useEffect } from 'react';
 
-import './Modal.scss';
+const modalRoot = document.getElementById('portal');
 
-export const Modal = ({ children, closeModal }) => {
-    return (
-        <div className="modal">
-            <div className="modal__body">
-                <i
-                    className="modal__close fas fa-times"
-                    onClick={() => closeModal()}
-                />
-                {children}
-            </div>
+export const Modal = ({ children }) => {
+    const el = document.createElement('div');
 
-            <div className="modal__background" />
-        </div>
-    );
+    useEffect(() => {
+        modalRoot.appendChild(el);
+
+        return () => modalRoot.removeChild(el);
+    }, [el]);
+
+    return ReactDOM.createPortal(children, el);
 };

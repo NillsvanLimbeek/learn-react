@@ -5,6 +5,7 @@ import './BaseInput.scss';
 export const BaseInput = ({
     value,
     onInput,
+    id,
     label = null,
     placeholder = null,
 }) => {
@@ -34,7 +35,7 @@ export const BaseInput = ({
             )}
             <input
                 type="text"
-                id="input"
+                id={id}
                 placeholder={placeholder}
                 value={value}
                 onChange={onChange}

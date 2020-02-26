@@ -6,11 +6,15 @@ import './BoardsMenu.scss';
 import { SideMenu } from '../side-menu/SideMenu';
 import { Search } from '../search/Search';
 import { BoardListButton } from '../board-list-button/BoardListButton';
+import { Modal } from '../modal/Modal';
+import { ModalCenter } from '../modal/ModalCenter';
+import { AddBoard } from '../forms/AddBoard';
 
 export const BoardsMenu = ({ boards }) => {
     const [sideMenu, setSideMenu] = useState(false);
     const [search, setSearch] = useState('');
     const [filtererdBoards, setFilteredBoards] = useState(boards);
+    const [modal, setModal] = useState(false);
 
     const history = useHistory();
     const location = useLocation();
@@ -28,6 +32,11 @@ export const BoardsMenu = ({ boards }) => {
 
         setSideMenu(false);
         setSearch('');
+    };
+
+    const openModal = () => {
+        setSideMenu(false);
+        setModal(true);
     };
 
     return (
@@ -55,11 +64,19 @@ export const BoardsMenu = ({ boards }) => {
                             />
                         ))}
 
-                        <div className="boards-menu__add">
+                        <div className="boards-menu__add" onClick={openModal}>
                             <i className="fas fa-plus"></i> Add Board
                         </div>
                     </div>
                 </SideMenu>
+            )}
+
+            {modal && (
+                <Modal>
+                    <ModalCenter closeModal={() => setModal(false)}>
+                        <AddBoard />
+                    </ModalCenter>
+                </Modal>
             )}
         </div>
     );
