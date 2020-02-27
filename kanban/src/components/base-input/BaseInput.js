@@ -12,8 +12,8 @@ export const BaseInput = ({
     const [focus, setFocus] = useState(false);
 
     useEffect(() => {
-        return value.length > 0 ? setFocus(true) : setFocus(false);
-    }, [value]);
+        return value.length > 0 || focus ? setFocus(true) : setFocus(false);
+    }, [value, focus]);
 
     const onChange = (e) => {
         onInput(e.target.value);
