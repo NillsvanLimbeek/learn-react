@@ -1,17 +1,37 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 
 import './AddBoard.scss';
 
+import BoardsContext from '../../context/boards/boardsContext';
+
+import { generateGuid } from '../../utils/guid';
+
 import { BaseInput } from '../base-input/BaseInput';
 
-export const AddBoard = () => {
-    const [boardName, setBoardName] = useState('');
-    const [boardColor, setBoardColor] = useState('');
+export const AddBoard = ({ onAddBoard }) => {
+    const { addBoard } = useContext(BoardsContext);
+
+    const [board, setBoard] = useState({
+        title: '',
+        color: '',
+        favorite: false,
+        id: '',
+    });
 
     const onSubmit = (e) => {
         e.preventDefault();
 
-        console.log({ boardName, boardColor });
+        addBoard(board);
+        onAddBoard(board);
+    };
+
+    const setInput = (e) => {
+        setBoard({
+            ...board,
+            [e.target.name]: e.target.value,
+            favorite: false,
+            id: generateGuid(),
+        });
     };
 
     return (
@@ -20,16 +40,16 @@ export const AddBoard = () => {
 
             <form onSubmit={onSubmit}>
                 <BaseInput
-                    id="name"
+                    name="title"
                     label="Board Name"
-                    value={boardName}
-                    onInput={setBoardName}
+                    value={board.title}
+                    onInput={setInput}
                 />
                 <BaseInput
-                    id="color"
+                    name="color"
                     label="Color"
-                    value={boardColor}
-                    onInput={setBoardColor}
+                    value={board.color}
+                    onInput={setInput}
                 />
 
                 <button>Submit</button>

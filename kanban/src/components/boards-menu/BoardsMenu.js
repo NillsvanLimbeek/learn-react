@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Fragment } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
 
 import './BoardsMenu.scss';
@@ -13,19 +13,32 @@ import { AddBoard } from '../forms/AddBoard';
 export const BoardsMenu = ({ boards }) => {
     const [sideMenu, setSideMenu] = useState(false);
     const [search, setSearch] = useState('');
-    const [filtererdBoards, setFilteredBoards] = useState(boards);
+    const [filtererdBoards, setFilteredBoards] = useState([]);
+    const [favoriteBoards, setfavoriteBoards] = useState([]);
     const [modal, setModal] = useState(false);
 
     const history = useHistory();
     const location = useLocation();
 
+    // search for boards
     useEffect(() => {
-        return setFilteredBoards(
+        setFilteredBoards(
             boards.filter((board) => board.title.includes(search)),
         );
+
+        return () => setFilteredBoards([]);
     }, [search, boards]);
 
-    const redirectTo = (id) => {
+    // favorite boards
+    useEffect(() => {
+        const favoriteBoards = boards.filter((board) => board.favorite);
+
+        if (favoriteBoards.length) {
+            setfavoriteBoards(favoriteBoards);
+        }
+    }, [boards]);
+
+    const redirectToBoard = (id) => {
         location.pathname.includes('board')
             ? history.push(`${id}`)
             : history.push(`board/${id}`);
@@ -37,6 +50,11 @@ export const BoardsMenu = ({ boards }) => {
     const openModal = () => {
         setSideMenu(false);
         setModal(true);
+    };
+
+    const onAddBoard = (board) => {
+        setModal(false);
+        redirectToBoard(board.id);
     };
 
     return (
@@ -54,19 +72,38 @@ export const BoardsMenu = ({ boards }) => {
                     <div className="boards-menu__menu">
                         <Search search={search} onSearch={setSearch} />
 
-                        <h3>Boards</h3>
+                        {favoriteBoards && (
+                            <Fragment>
+                                <h3>Favorite Boards</h3>
 
-                        {filtererdBoards.map((board) => (
-                            <BoardListButton
-                                board={board}
-                                key={board.title}
-                                redirectTo={redirectTo}
-                            />
-                        ))}
+                                {favoriteBoards.map((board) => (
+                                    <BoardListButton
+                                        board={board}
+                                        key={board.title}
+                                        redirectTo={redirectToBoard}
+                                    />
+                                ))}
+                            </Fragment>
+                        )}
 
-                        <div className="boards-menu__add" onClick={openModal}>
-                            <i className="fas fa-plus"></i> Add Board
-                        </div>
+                        <Fragment>
+                            <h3>Personal Boards</h3>
+
+                            {filtererdBoards.map((board) => (
+                                <BoardListButton
+                                    board={board}
+                                    key={board.title}
+                                    redirectTo={redirectToBoard}
+                                />
+                            ))}
+
+                            <div
+                                className="boards-menu__add"
+                                onClick={openModal}
+                            >
+                                <i className="fas fa-plus"></i> Add Board
+                            </div>
+                        </Fragment>
                     </div>
                 </SideMenu>
             )}
@@ -74,7 +111,7 @@ export const BoardsMenu = ({ boards }) => {
             {modal && (
                 <Modal>
                     <ModalCenter closeModal={() => setModal(false)}>
-                        <AddBoard />
+                        <AddBoard onAddBoard={onAddBoard} />
                     </ModalCenter>
                 </Modal>
             )}

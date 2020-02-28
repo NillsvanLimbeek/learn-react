@@ -5,7 +5,7 @@ import './BaseInput.scss';
 export const BaseInput = ({
     value,
     onInput,
-    id,
+    name,
     label = null,
     placeholder = null,
 }) => {
@@ -16,7 +16,7 @@ export const BaseInput = ({
     }, [value, focus]);
 
     const onChange = (e) => {
-        onInput(e.target.value);
+        onInput(e);
     };
 
     return (
@@ -35,7 +35,7 @@ export const BaseInput = ({
             )}
             <input
                 type="text"
-                id={id}
+                name={name}
                 placeholder={placeholder}
                 value={value}
                 onChange={onChange}
