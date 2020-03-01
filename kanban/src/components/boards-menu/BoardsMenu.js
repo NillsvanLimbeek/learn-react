@@ -72,14 +72,14 @@ export const BoardsMenu = ({ boards }) => {
                     <div className="boards-menu__menu">
                         <Search search={search} onSearch={setSearch} />
 
-                        {favoriteBoards && (
+                        {favoriteBoards.length > 0 && (
                             <Fragment>
                                 <h3>Favorite Boards</h3>
 
                                 {favoriteBoards.map((board) => (
                                     <BoardListButton
                                         board={board}
-                                        key={board.title}
+                                        key={board.id}
                                         redirectTo={redirectToBoard}
                                     />
                                 ))}
@@ -92,7 +92,7 @@ export const BoardsMenu = ({ boards }) => {
                             {filtererdBoards.map((board) => (
                                 <BoardListButton
                                     board={board}
-                                    key={board.title}
+                                    key={board.id}
                                     redirectTo={redirectToBoard}
                                 />
                             ))}

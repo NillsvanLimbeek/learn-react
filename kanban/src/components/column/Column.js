@@ -2,10 +2,14 @@ import React, { useContext, useEffect, useState } from 'react';
 
 import './Column.scss';
 
+import ColumnsContext from '../../context/columns/columnsContext';
 import CardsContext from '../../context/cards/cardsContext';
 
+import { generateGuid } from '../../utils/guid';
+
 export const Column = ({ column }) => {
-    const { cards } = useContext(CardsContext);
+    const { updateColumn } = useContext(ColumnsContext);
+    const { cards, addCard } = useContext(CardsContext);
 
     const [filteredCards, setFilteredCards] = useState([]);
 
@@ -22,6 +26,15 @@ export const Column = ({ column }) => {
             setFilteredCards([]);
         };
     }, [column, cards]);
+
+    const onAddCard = () => {
+        const id = generateGuid();
+        const card = { title: 'Card', id, columnId: column.id };
+        const newColumn = { ...column, cards: [...column.cards, id] };
+
+        addCard(card);
+        updateColumn(newColumn);
+    };
 
     return (
         <div className="column">
@@ -40,7 +53,9 @@ export const Column = ({ column }) => {
                     <p key={card.id}>{card.title}</p>
                 ))}
 
-                <p className="column__add">Add Card</p>
+                <p className="column__add" onClick={onAddCard}>
+                    Add Card
+                </p>
             </div>
         </div>
     );

@@ -1,15 +1,17 @@
 import React, { useContext, useEffect, useState } from 'react';
 
+import './Board.scss';
+
 import BoardsContext from '../../context/boards/boardsContext';
 import ColumnsContext from '../../context/columns/columnsContext';
 
-import './Board.scss';
+import { generateGuid } from '../../utils/guid';
 
 import { Column } from '../column/Column';
 
 export const Board = ({ match }) => {
     const { boards } = useContext(BoardsContext);
-    const { columns } = useContext(ColumnsContext);
+    const { columns, addColumn } = useContext(ColumnsContext);
 
     const [board, setBoard] = useState({});
     const [filteredColumns, setFilteredColumns] = useState([]);
@@ -36,8 +38,18 @@ export const Board = ({ match }) => {
         };
     }, [match, boards, columns]);
 
+    const onAddColumn = () => {
+        const board = boards.find((board) => board.id === match.params.id);
+
+        addColumn({
+            title: '',
+            id: generateGuid(),
+            boardId: board.id,
+            cards: [],
+        });
+    };
+
     return (
-        // TODO loading if board is being fetched
         <div className="board">
             <div className="board__header">
                 <div
@@ -59,7 +71,9 @@ export const Board = ({ match }) => {
                     <Column column={column} key={column.id} />
                 ))}
 
-                <div className="board__add">Add Column</div>
+                <div className="board__add" onClick={onAddColumn}>
+                    Add Column
+                </div>
             </div>
         </div>
     );

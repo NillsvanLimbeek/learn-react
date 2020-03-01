@@ -46,9 +46,21 @@ export const ColumnsState = (props) => {
         });
     };
 
+    const updateColumn = (column) => {
+        dispatch({
+            type: 'UPDATE_COLUMN',
+            payload: column,
+        });
+    };
+
     return (
         <ColumnsContext.Provider
-            value={{ columns: state.columns, addColumn, removeColumn }}
+            value={{
+                columns: state.columns,
+                addColumn,
+                removeColumn,
+                updateColumn,
+            }}
         >
             {props.children}
         </ColumnsContext.Provider>
