@@ -1,12 +1,13 @@
-import React, { useContext } from 'react';
-
-import BoardsContext from '../../context/boards/boardsContext';
+import React from 'react';
 
 import './BoardListButton.scss';
 
-export const BoardListButton = ({ board, redirectTo }) => {
-    const { removeBoard, favoriteBoard } = useContext(BoardsContext);
-
+export const BoardListButton = ({
+    board,
+    redirectTo,
+    removeBoard,
+    favoriteBoard,
+}) => {
     return (
         <div className="board-list-button">
             <div
@@ -23,13 +24,13 @@ export const BoardListButton = ({ board, redirectTo }) => {
             <div className="board-list-button__actions">
                 <i
                     className="board-list-button__trash fas fa-trash"
-                    onClick={() => removeBoard(board.title)}
+                    onClick={() => removeBoard(board.id)}
                 />
                 <i
                     className={`board-list-button__star fas fa-star ${
                         board.favorite ? 'board-list-button__star--active' : ''
                     }`}
-                    onClick={() => favoriteBoard(board.title)}
+                    onClick={() => favoriteBoard(board.id)}
                 />
             </div>
         </div>
