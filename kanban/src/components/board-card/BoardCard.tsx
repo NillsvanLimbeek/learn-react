@@ -2,6 +2,8 @@ import React from 'react';
 
 import './BoardCard.scss';
 
+type Board = {};
+
 export const BoardCard = ({ board }) => {
     return (
         <div

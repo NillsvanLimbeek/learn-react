@@ -3,7 +3,7 @@ import React from 'react';
 import './assets/scss/main.scss';
 import './App.scss';
 
-import { Layout } from './components//layout/Layout';
+import { Layout } from './components/layout/Layout';
 
 function App() {
     return <Layout />;

@@ -2,22 +2,20 @@ import React, { useState, useEffect } from 'react';
 
 import './BaseInput.scss';
 
+import { BaseInputProps } from '../../data/types/BaseInput';
+
 export const BaseInput = ({
     value,
-    onInput,
+    onChange,
     name,
-    label = null,
-    placeholder = null,
-}) => {
+    label,
+    placeholder,
+}: BaseInputProps) => {
     const [focus, setFocus] = useState(false);
 
     useEffect(() => {
         return value.length > 0 || focus ? setFocus(true) : setFocus(false);
     }, [value, focus]);
-
-    const onChange = (e) => {
-        onInput(e);
-    };
 
     return (
         <div className="base-input">
