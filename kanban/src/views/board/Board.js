@@ -1,17 +1,19 @@
 import React, { useContext, useEffect, useState } from 'react';
 
-import './Board.scss';
-
 import BoardsContext from '../../context/boards/boardsContext';
 import ColumnsContext from '../../context/columns/columnsContext';
+import CardsContext from '../../context/cards/cardsContext';
+
+import './Board.scss';
 
 import { generateGuid } from '../../utils/guid';
 
-import { Column } from '../column/Column';
+import { Column } from '../../components/column/Column';
 
 export const Board = ({ match }) => {
     const { boards } = useContext(BoardsContext);
-    const { columns, addColumn } = useContext(ColumnsContext);
+    const { columns, addColumn, updateColumn } = useContext(ColumnsContext);
+    const { cards, addCard } = useContext(CardsContext);
 
     const [board, setBoard] = useState({});
     const [filteredColumns, setFilteredColumns] = useState([]);
@@ -39,14 +41,17 @@ export const Board = ({ match }) => {
     }, [match, boards, columns]);
 
     const onAddColumn = () => {
-        const board = boards.find((board) => board.id === match.params.id);
-
         addColumn({
             title: '',
             id: generateGuid(),
             boardId: board.id,
-            cards: [],
+            cardIds: [],
         });
+    };
+
+    const onAddCard = ({ updatedColumn, card }) => {
+        updateColumn(updatedColumn);
+        addCard(card);
     };
 
     return (
@@ -68,7 +73,12 @@ export const Board = ({ match }) => {
 
             <div className="board__columns">
                 {filteredColumns.map((column) => (
-                    <Column column={column} key={column.id} />
+                    <Column
+                        column={column}
+                        cards={cards}
+                        addCard={onAddCard}
+                        key={column.id}
+                    />
                 ))}
 
                 <div className="board__add" onClick={onAddColumn}>

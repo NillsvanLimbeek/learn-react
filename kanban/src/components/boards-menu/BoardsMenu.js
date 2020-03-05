@@ -10,7 +10,7 @@ import { Modal } from '../modal/Modal';
 import { ModalCenter } from '../modal/ModalCenter';
 import { AddBoard } from '../forms/AddBoard';
 
-export const BoardsMenu = ({ boards }) => {
+export const BoardsMenu = ({ boards, removeBoard, favoriteBoard }) => {
     const [sideMenu, setSideMenu] = useState(false);
     const [search, setSearch] = useState('');
     const [filtererdBoards, setFilteredBoards] = useState([]);
@@ -81,6 +81,8 @@ export const BoardsMenu = ({ boards }) => {
                                         board={board}
                                         key={board.id}
                                         redirectTo={redirectToBoard}
+                                        removeBoard={() => removeBoard}
+                                        favoriteBoard={() => favoriteBoard}
                                     />
                                 ))}
                             </Fragment>
@@ -94,6 +96,8 @@ export const BoardsMenu = ({ boards }) => {
                                     board={board}
                                     key={board.id}
                                     redirectTo={redirectToBoard}
+                                    removeBoard={removeBoard}
+                                    favoriteBoard={favoriteBoard}
                                 />
                             ))}
 

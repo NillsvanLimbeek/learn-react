@@ -5,10 +5,10 @@ import './BoardsList.scss';
 
 import BoardsContext from '../../context/boards/boardsContext';
 
-import { BoardCard } from '../board-card/BoardCard';
-import { Modal } from '../modal/Modal';
-import { ModalCenter } from '../modal/ModalCenter';
-import { AddBoard } from '../forms/AddBoard';
+import { BoardCard } from '../../components/board-card/BoardCard';
+import { Modal } from '../../components/modal/Modal';
+import { ModalCenter } from '../../components/modal/ModalCenter';
+import { AddBoard } from '../../components/forms/AddBoard';
 
 export const BoardsList = () => {
     const { boards } = useContext(BoardsContext);

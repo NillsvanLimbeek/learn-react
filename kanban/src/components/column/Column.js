@@ -1,16 +1,12 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import './Column.scss';
 
-import ColumnsContext from '../../context/columns/columnsContext';
-import CardsContext from '../../context/cards/cardsContext';
-
 import { generateGuid } from '../../utils/guid';
 
-export const Column = ({ column }) => {
-    const { updateColumn } = useContext(ColumnsContext);
-    const { cards, addCard } = useContext(CardsContext);
+import { Card } from '../card/Card';
 
+export const Column = ({ column, cards, addCard }) => {
     const [filteredCards, setFilteredCards] = useState([]);
 
     useEffect(() => {
@@ -28,12 +24,14 @@ export const Column = ({ column }) => {
     }, [column, cards]);
 
     const onAddCard = () => {
-        const id = generateGuid();
-        const card = { title: 'Card', id, columnId: column.id };
-        const newColumn = { ...column, cards: [...column.cards, id] };
+        const cardId = generateGuid();
+        const updatedColumn = {
+            ...column,
+            cardIds: [...column.cardIds, cardId],
+        };
+        const card = { title: 'Card', id: cardId, columnId: column.id };
 
-        addCard(card);
-        updateColumn(newColumn);
+        addCard({ updatedColumn, card });
     };
 
     return (
@@ -49,8 +47,7 @@ export const Column = ({ column }) => {
 
             <div className="column__cards">
                 {filteredCards.map((card) => (
-                    // TODO card component
-                    <p key={card.id}>{card.title}</p>
+                    <Card card={card} key={card.id} />
                 ))}
 
                 <p className="column__add" onClick={onAddCard}>
