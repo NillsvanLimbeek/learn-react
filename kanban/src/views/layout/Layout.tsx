@@ -5,8 +5,8 @@ import './Layout.scss';
 
 import { Navbar } from '../../components/navbar/Navbar';
 
-import { BoardsList } from '../../views/boards-list/BoardsList';
-import { Board } from '../../views/board/Board';
+import { BoardsList } from '../boards-list/BoardsList';
+import { Board } from '../board/Board';
 
 export const Layout = () => {
     return (

@@ -3,21 +3,21 @@ import React from 'react';
 import './assets/scss/main.scss';
 import './App.scss';
 
-import BoardsState from './context/boards/BoardsState';
-import ColumnsState from './context/columns/ColumnsState';
-import CardsState from './context/cards/CardsState';
+import { BoardsProvider } from './context/boards/boardsContext';
+import { ColumnsProvider } from './context/columns/columnsContext';
+import { CardsProvider } from './context/cards/cardsContext';
 
 import { Layout } from './views//layout/Layout';
 
 function App() {
     return (
-        <BoardsState>
-            <ColumnsState>
-                <CardsState>
+        <BoardsProvider>
+            <ColumnsProvider>
+                <CardsProvider>
                     <Layout />
-                </CardsState>
-            </ColumnsState>
-        </BoardsState>
+                </CardsProvider>
+            </ColumnsProvider>
+        </BoardsProvider>
     );
 }
 

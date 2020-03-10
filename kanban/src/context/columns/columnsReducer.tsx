@@ -1,4 +1,6 @@
-export default (state, action) => {
+import { State, Action } from './columnTypes';
+
+export default (state: State, action: Action) => {
     switch (action.type) {
         case 'ADD_COLUMN':
             return { ...state, columns: [...state.columns, action.payload] };
@@ -10,6 +12,7 @@ export default (state, action) => {
                 ),
             };
         default:
-            return new Error(`${action.type} is not reconized`);
+            // throw new Error(`Type of ${action.type} is not reconized`);
+            return state;
     }
 };

@@ -2,7 +2,12 @@ import React from 'react';
 
 import './Modal.scss';
 
-export const ModalCenter = ({ children, closeModal }) => {
+type Props = {
+    children: React.ReactNode;
+    closeModal: () => void;
+};
+
+export const ModalCenter = ({ children, closeModal }: Props) => {
     return (
         <div className="modal">
             <div className="modal__body">

@@ -1,9 +1,9 @@
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import './Navbar.scss';
 
-import BoardsContext from '../../context/boards/boardsContext';
+import { useBoardsState } from '../../context/boards/boardsContext';
 
 import { BoardsMenu } from '../boards-menu/BoardsMenu';
 import { Search } from '../search/Search';
@@ -12,15 +12,15 @@ import { NotificationsButton } from '../notifications-button/NotificationsButton
 import { MenuButton } from '../menu-button/MenuButton';
 
 export const Navbar = () => {
-    const { boards } = useContext(BoardsContext);
+    const { boards } = useBoardsState();
 
     const [search, setSearch] = useState('');
 
-    const removeBoard = (id) => {
+    const removeBoard = (id: string) => {
         console.log(id);
     };
 
-    const favoriteBoard = (id) => {
+    const favoriteBoard = (id: string) => {
         console.log(id);
     };
 
@@ -31,7 +31,11 @@ export const Navbar = () => {
                 removeBoard={removeBoard}
                 favoriteBoard={favoriteBoard}
             />
-            <Search withModal search={search} onSearch={setSearch} />
+            <Search
+                withModal
+                search={search}
+                onChange={(e) => setSearch(e.currentTarget.value)}
+            />
 
             <Link to="/" className="navbar__logo">
                 <div className="navbar__link">

@@ -2,7 +2,13 @@ import React from 'react';
 
 import './BoardCard.scss';
 
-export const BoardCard = ({ board }: any) => {
+import { IBoard } from '../../data/types/Board';
+
+type Props = {
+    board: IBoard;
+};
+
+export const BoardCard = ({ board }: Props) => {
     return (
         <div
             className="board-card"

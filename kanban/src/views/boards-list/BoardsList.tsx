@@ -1,9 +1,11 @@
-import React, { useContext, useEffect, useState, Fragment } from 'react';
+import React, { useEffect, useState, Fragment } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 
 import './BoardsList.scss';
 
-import BoardsContext from '../../context/boards/boardsContext';
+import { useBoardsState } from '../../context/boards/boardsContext';
+
+import { IBoard } from '../../data/types/Board';
 
 import { BoardCard } from '../../components/board-card/BoardCard';
 import { Modal } from '../../components/modal/Modal';
@@ -11,7 +13,7 @@ import { ModalCenter } from '../../components/modal/ModalCenter';
 import { AddBoard } from '../../components/forms/AddBoard';
 
 export const BoardsList = () => {
-    const { boards } = useContext(BoardsContext);
+    const { boards } = useBoardsState();
 
     const [favorite, setFavorite] = useState(false);
     const [modal, setModal] = useState(false);
@@ -26,7 +28,7 @@ export const BoardsList = () => {
         return () => setFavorite(false);
     }, [boards]);
 
-    const redirectToBoard = (board) => {
+    const redirectToBoard = (board: IBoard) => {
         history.push(`board/${board.id}`);
     };
 

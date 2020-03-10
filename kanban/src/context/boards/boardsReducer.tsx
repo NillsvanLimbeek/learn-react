@@ -1,4 +1,6 @@
-export default (state, action) => {
+import { State, Action } from './boardTypes';
+
+export default (state: State, action: Action) => {
     switch (action.type) {
         case 'ADD_BOARD':
             return { ...state, boards: [...state.boards, action.payload] };
@@ -14,7 +16,9 @@ export default (state, action) => {
                 (board) => board.title === action.payload,
             );
 
-            board.favorite = true;
+            if (board) {
+                board.favorite = true;
+            }
 
             return {
                 ...state,

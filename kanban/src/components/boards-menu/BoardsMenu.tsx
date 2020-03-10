@@ -10,11 +10,19 @@ import { Modal } from '../modal/Modal';
 import { ModalCenter } from '../modal/ModalCenter';
 import { AddBoard } from '../forms/AddBoard';
 
-export const BoardsMenu = ({ boards, removeBoard, favoriteBoard }) => {
+import { IBoard } from '../../data/types/Board';
+
+type Props = {
+    boards: IBoard[];
+    removeBoard: (id: string) => void;
+    favoriteBoard: (id: string) => void;
+};
+
+export const BoardsMenu = ({ boards, removeBoard, favoriteBoard }: Props) => {
     const [sideMenu, setSideMenu] = useState(false);
     const [search, setSearch] = useState('');
-    const [filtererdBoards, setFilteredBoards] = useState([]);
-    const [favoriteBoards, setfavoriteBoards] = useState([]);
+    const [filtererdBoards, setFilteredBoards] = useState<IBoard[]>([]);
+    const [favoriteBoards, setfavoriteBoards] = useState<IBoard[]>([]);
     const [modal, setModal] = useState(false);
 
     const history = useHistory();
@@ -38,7 +46,7 @@ export const BoardsMenu = ({ boards, removeBoard, favoriteBoard }) => {
         }
     }, [boards]);
 
-    const redirectToBoard = (id) => {
+    const redirectToBoard = (id: string) => {
         location.pathname.includes('board')
             ? history.push(`${id}`)
             : history.push(`board/${id}`);
@@ -52,7 +60,7 @@ export const BoardsMenu = ({ boards, removeBoard, favoriteBoard }) => {
         setModal(true);
     };
 
-    const onAddBoard = (board) => {
+    const onAddBoard = (board: IBoard) => {
         setModal(false);
         redirectToBoard(board.id);
     };
@@ -70,7 +78,10 @@ export const BoardsMenu = ({ boards, removeBoard, favoriteBoard }) => {
             {sideMenu && (
                 <SideMenu closeSideMenu={() => setSideMenu(false)}>
                     <div className="boards-menu__menu">
-                        <Search search={search} onSearch={setSearch} />
+                        <Search
+                            search={search}
+                            onChange={(e) => setSearch(e.currentTarget.value)}
+                        />
 
                         {favoriteBoards.length > 0 && (
                             <Fragment>

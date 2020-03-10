@@ -2,7 +2,12 @@ import React from 'react';
 
 import './SideMenu.scss';
 
-export const SideMenu = ({ children, closeSideMenu }) => {
+type Props = {
+    children: React.ReactNode;
+    closeSideMenu: () => void;
+};
+
+export const SideMenu = ({ children, closeSideMenu }: Props) => {
     return (
         <div className="side-menu">
             <div className="side-menu__body">

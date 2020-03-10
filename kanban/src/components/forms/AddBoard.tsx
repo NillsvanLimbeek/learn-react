@@ -1,34 +1,40 @@
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
 
 import './AddBoard.scss';
 
-import BoardsContext from '../../context/boards/boardsContext';
+import { useBoardsDispatch } from '../../context/boards/boardsContext';
 
 import { generateGuid } from '../../utils/guid';
+import { IBoard } from '../../data/types/Board';
 
 import { BaseInput } from '../base-input/BaseInput';
 
-export const AddBoard = ({ onAddBoard }) => {
-    const { addBoard } = useContext(BoardsContext);
+type Props = {
+    onAddBoard: (board: IBoard) => void;
+};
 
-    const [board, setBoard] = useState({
+export const AddBoard = ({ onAddBoard }: Props) => {
+    const boardsDispatch = useBoardsDispatch();
+
+    const [board, setBoard] = useState<IBoard>({
         title: '',
         color: '',
         favorite: false,
         id: '',
+        columnIds: [],
     });
 
-    const onSubmit = (e) => {
+    const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        addBoard(board);
+        boardsDispatch({ type: 'ADD_BOARD', payload: board });
         onAddBoard(board);
     };
 
-    const setInput = (e) => {
+    const setInput = (e: React.FormEvent<HTMLInputElement>) => {
         setBoard({
             ...board,
-            [e.target.name]: e.target.value,
+            [e.currentTarget.name]: e.currentTarget.value,
             favorite: false,
             id: generateGuid(),
         });
@@ -43,13 +49,13 @@ export const AddBoard = ({ onAddBoard }) => {
                     name="title"
                     label="Board Name"
                     value={board.title}
-                    onInput={setInput}
+                    onChange={setInput}
                 />
                 <BaseInput
                     name="color"
                     label="Color"
                     value={board.color}
-                    onInput={setInput}
+                    onChange={setInput}
                 />
 
                 <button>Submit</button>

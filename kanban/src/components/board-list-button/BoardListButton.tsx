@@ -2,12 +2,21 @@ import React from 'react';
 
 import './BoardListButton.scss';
 
+import { IBoard } from '../../data/types/Board';
+
+type Props = {
+    board: IBoard;
+    redirectTo: (id: string) => void;
+    removeBoard: (id: string) => void;
+    favoriteBoard: (id: string) => void;
+};
+
 export const BoardListButton = ({
     board,
     redirectTo,
     removeBoard,
     favoriteBoard,
-}) => {
+}: Props) => {
     return (
         <div className="board-list-button">
             <div

@@ -4,10 +4,25 @@ import './Column.scss';
 
 import { generateGuid } from '../../utils/guid';
 
+import { IColumn } from '../../data/types/Column';
+import { ICard } from '../../data/types/Card';
+
 import { Card } from '../card/Card';
 
-export const Column = ({ column, cards, addCard }) => {
-    const [filteredCards, setFilteredCards] = useState([]);
+type Props = {
+    column: IColumn;
+    cards: ICard[];
+    addCard: ({
+        updatedColumn,
+        card,
+    }: {
+        updatedColumn: IColumn;
+        card: ICard;
+    }) => void;
+};
+
+export const Column = ({ column, cards, addCard }: Props) => {
+    const [filteredCards, setFilteredCards] = useState<ICard[]>([]);
 
     useEffect(() => {
         const filteredCards = cards.filter(
@@ -25,11 +40,11 @@ export const Column = ({ column, cards, addCard }) => {
 
     const onAddCard = () => {
         const cardId = generateGuid();
-        const updatedColumn = {
+        const updatedColumn: IColumn = {
             ...column,
             cardIds: [...column.cardIds, cardId],
         };
-        const card = { title: 'Card', id: cardId, columnId: column.id };
+        const card: ICard = { title: 'Card', id: cardId, columnId: column.id };
 
         addCard({ updatedColumn, card });
     };

@@ -2,16 +2,18 @@ import React, { useState, useEffect } from 'react';
 
 import './Search.scss';
 
-export const Search = ({ search, onSearch, withModal = false }) => {
+type Props = {
+    search: string;
+    onChange: (e: React.FormEvent<HTMLInputElement>) => void;
+    withModal?: boolean;
+};
+
+export const Search = ({ search, onChange, withModal }: Props) => {
     const [showModal, setShowModal] = useState(false);
 
     useEffect(() => {
         return search.length > 0 ? setShowModal(true) : setShowModal(false);
     }, [search]);
-
-    const onChange = (e) => {
-        onSearch(e.target.value);
-    };
 
     return (
         <div className="search">

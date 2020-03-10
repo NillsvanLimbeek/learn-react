@@ -2,7 +2,13 @@ import React, { useState, useEffect } from 'react';
 
 import './BaseInput.scss';
 
-import { BaseInputProps } from '../../data/types/BaseInput';
+type Props = {
+    value: string;
+    onChange: (e: React.FormEvent<HTMLInputElement>) => void;
+    name: string;
+    label?: string;
+    placeholder?: string;
+};
 
 export const BaseInput = ({
     value,
@@ -10,7 +16,7 @@ export const BaseInput = ({
     name,
     label,
     placeholder,
-}: BaseInputProps) => {
+}: Props) => {
     const [focus, setFocus] = useState(false);
 
     useEffect(() => {
