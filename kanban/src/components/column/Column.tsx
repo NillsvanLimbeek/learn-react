@@ -44,7 +44,12 @@ export const Column = ({ column, cards, addCard }: Props) => {
             ...column,
             cardIds: [...column.cardIds, cardId],
         };
-        const card: ICard = { title: 'Card', id: cardId, columnId: column.id };
+        const card: ICard = {
+            title: 'Card',
+            id: cardId,
+            columnId: column.id,
+            labels: [],
+        };
 
         addCard({ updatedColumn, card });
     };

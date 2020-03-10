@@ -27,7 +27,7 @@
 
 .column__header h4 {
     margin: 0;
-    font-weight: 500;
+    font-weight: 600;
 }
 
 .column__header i:last-child {
@@ -48,4 +48,10 @@
 
 .column__add {
     text-align: center;
+    color: var(--color-grey-dark);
+    cursor: pointer;
+
+    &:hover {
+        color: var(--color-black);
+    }
 }

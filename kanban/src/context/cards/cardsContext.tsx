@@ -10,8 +10,8 @@ const initialState: State = {
             title: 'Card 1',
             id: '67061e04-da50-49da-b61c-46be7ee1eb1f',
             columnId: 'fd97350a-3875-45ad-822a-74a5c59ff0e9',
+            labels: ['red', 'blue', 'yellow'],
             // TODO
-            // labels
             // description
             // attachments
         },
@@ -19,11 +19,13 @@ const initialState: State = {
             title: 'Card 2',
             id: 'fd4ae017-f106-4f8a-bf10-a8a7ce09c342',
             columnId: 'fd97350a-3875-45ad-822a-74a5c59ff0e9',
+            labels: ['blue'],
         },
         {
             title: 'Card 3',
             id: 'a8425a2f-1138-4a6f-9d86-1efa8f9432fe',
             columnId: 'b3f095aa-f4a7-4978-b614-c5406376ed72',
+            labels: ['yellow'],
         },
     ],
 };
