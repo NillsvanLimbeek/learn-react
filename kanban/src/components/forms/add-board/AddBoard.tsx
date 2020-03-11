@@ -2,12 +2,12 @@ import React, { useState } from 'react';
 
 import './AddBoard.scss';
 
-import { useBoardsDispatch } from '../../context/boards/boardsContext';
+import { useBoardsDispatch } from '../../../context/boards/boardsContext';
 
-import { generateGuid } from '../../utils/guid';
-import { IBoard } from '../../data/types/Board';
+import { generateGuid } from '../../../utils/guid';
+import { IBoard } from '../../../data/types/Board';
 
-import { BaseInput } from '../base-input/BaseInput';
+import { BaseInput } from '../../base-input/BaseInput';
 
 type Props = {
     onAddBoard: (board: IBoard) => void;

@@ -8,7 +8,7 @@ import { Search } from '../search/Search';
 import { BoardListButton } from '../board-list-button/BoardListButton';
 import { Modal } from '../modal/Modal';
 import { ModalCenter } from '../modal/ModalCenter';
-import { AddBoard } from '../forms/AddBoard';
+import { AddBoard } from '../forms/add-board/AddBoard';
 
 import { IBoard } from '../../data/types/Board';
 

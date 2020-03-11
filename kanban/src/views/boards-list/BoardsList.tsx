@@ -10,7 +10,7 @@ import { IBoard } from '../../data/types/Board';
 import { BoardCard } from '../../components/board-card/BoardCard';
 import { Modal } from '../../components/modal/Modal';
 import { ModalCenter } from '../../components/modal/ModalCenter';
-import { AddBoard } from '../../components/forms/AddBoard';
+import { AddBoard } from '../../components/forms/add-board/AddBoard';
 
 export const BoardsList = () => {
     const { boards } = useBoardsState();

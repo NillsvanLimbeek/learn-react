@@ -6,6 +6,7 @@ import { ICard } from '../../data/types/Card';
 
 import { Modal } from '../modal/Modal';
 import { ModalCenter } from '../modal/ModalCenter';
+import { CardModal } from '../forms/card/CardModal';
 
 type Props = {
     card: ICard;
@@ -36,7 +37,8 @@ export const Card = ({ card }: Props) => {
             {modal && (
                 <Modal>
                     <ModalCenter closeModal={() => setModal(false)}>
-                        Card Modal
+                        <CardModal id={card.id} />
+                        {/* Test */}
                     </ModalCenter>
                 </Modal>
             )}
