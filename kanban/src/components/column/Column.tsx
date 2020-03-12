@@ -7,6 +7,7 @@ import { generateGuid } from '../../utils/guid';
 import { IColumn } from '../../data/types/Column';
 import { ICard } from '../../data/types/Card';
 
+import { InlineEdit } from '../inline-edit/InlineEdit';
 import { Card } from '../card/Card';
 
 type Props = {
@@ -54,12 +55,17 @@ export const Column = ({ column, cards, addCard }: Props) => {
         addCard({ updatedColumn, card });
     };
 
+    const setColumnTitle = (e: string) => {
+        console.log(e);
+    };
+
     return (
         <div className="column">
             <div className="column__header">
                 <div className="column__title">
                     <i className="far fa-circle" />
-                    <h4>{column.title}</h4>
+                    {/* <h4>{column.title}</h4> */}
+                    <InlineEdit value={column.title} onBlur={setColumnTitle} />
                 </div>
 
                 <i className="fas fa-ellipsis-h" />
