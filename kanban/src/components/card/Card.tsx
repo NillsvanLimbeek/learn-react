@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, Fragment } from 'react';
 
 import './Card.scss';
 
@@ -16,8 +16,8 @@ export const Card = ({ card }: Props) => {
     const [modal, setModal] = useState(false);
 
     return (
-        <div className="card">
-            <div onClick={() => setModal(true)}>
+        <Fragment>
+            <div className="card" onClick={() => setModal(true)}>
                 <div className="card__labels">
                     {card.labels.length > 0 &&
                         card.labels.map((label) => (
@@ -42,6 +42,6 @@ export const Card = ({ card }: Props) => {
                     </ModalCenter>
                 </Modal>
             )}
-        </div>
+        </Fragment>
     );
 };

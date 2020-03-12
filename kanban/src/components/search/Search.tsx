@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 
 import './Search.scss';
 
+import { BaseInput } from '../base-input/BaseInput';
+
 type Props = {
     search: string;
     onChange: (e: React.FormEvent<HTMLInputElement>) => void;

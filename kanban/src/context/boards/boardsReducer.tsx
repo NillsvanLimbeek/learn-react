@@ -8,12 +8,12 @@ export default (state: State, action: Action) => {
             return {
                 ...state,
                 boards: state.boards.filter(
-                    (board) => board.title !== action.payload,
+                    (board) => board.id !== action.payload,
                 ),
             };
         case 'FAVORITE_BOARD':
             const board = state.boards.find(
-                (board) => board.title === action.payload,
+                (board) => board.id === action.payload,
             );
 
             if (board) {

@@ -8,6 +8,7 @@ type Props = {
     name: string;
     label?: string;
     placeholder?: string;
+    className?: string;
 };
 
 export const BaseInput = ({
@@ -16,6 +17,7 @@ export const BaseInput = ({
     name,
     label,
     placeholder,
+    className,
 }: Props) => {
     const [focus, setFocus] = useState(false);
 
@@ -42,6 +44,7 @@ export const BaseInput = ({
                 name={name}
                 placeholder={placeholder}
                 value={value}
+                className={className}
                 onChange={onChange}
                 onFocus={() => setFocus(true)}
                 onBlur={() => setFocus(false)}
