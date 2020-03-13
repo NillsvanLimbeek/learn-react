@@ -11,6 +11,13 @@ export default (state: State, action: Action) => {
                     column.id === action.payload.id ? action.payload : column,
                 ),
             };
+        case 'DELETE_COLUMN':
+            return {
+                ...state,
+                columns: state.columns.filter(
+                    (column) => column.id !== action.payload,
+                ),
+            };
         default:
             // throw new Error(`Type of ${action.type} is not reconized`);
             return state;

@@ -20,11 +20,22 @@ type Props = {
         updatedColumn: IColumn;
         card: ICard;
     }) => void;
+    updateColumn: (column: IColumn) => void;
+    deleteColumn: (id: string) => void;
 };
 
-export const Column = ({ column, cards, addCard }: Props) => {
+export const Column = ({
+    column,
+    cards,
+    addCard,
+    updateColumn,
+    deleteColumn,
+}: Props) => {
+    // state
     const [filteredCards, setFilteredCards] = useState<ICard[]>([]);
+    const [editTitle, setEditTitle] = useState(false);
 
+    // find cards
     useEffect(() => {
         const filteredCards = cards.filter(
             (card) => card.columnId === column.id,
@@ -55,8 +66,13 @@ export const Column = ({ column, cards, addCard }: Props) => {
         addCard({ updatedColumn, card });
     };
 
-    const setColumnTitle = (e: string) => {
-        console.log(e);
+    const setColumnTitle = (title: string) => {
+        if (title.length) {
+            updateColumn({ ...column, title });
+            setEditTitle(false);
+        } else {
+            deleteColumn(column.id);
+        }
     };
 
     return (
@@ -64,8 +80,17 @@ export const Column = ({ column, cards, addCard }: Props) => {
             <div className="column__header">
                 <div className="column__title">
                     <i className="far fa-circle" />
-                    {/* <h4>{column.title}</h4> */}
-                    <InlineEdit value={column.title} onBlur={setColumnTitle} />
+
+                    {column.title.length && !editTitle ? (
+                        <h4 onClick={() => setEditTitle(true)}>
+                            {column.title}
+                        </h4>
+                    ) : (
+                        <InlineEdit
+                            value={column.title}
+                            onBlur={setColumnTitle}
+                        />
+                    )}
                 </div>
 
                 <i className="fas fa-ellipsis-h" />

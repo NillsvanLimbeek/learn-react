@@ -37,10 +37,12 @@ export const Board = ({ match }: RouteComponentProps<RouteInfo>) => {
     const { cards } = useCardsState();
     const cardsDispatch = useCardsDispatch();
 
+    // state
     const [board, setBoard] = useState<IBoard | null>(null);
     const [filteredColumns, setFilteredColumns] = useState<IColumn[] | null>(
         null,
     );
+    const [onAddColumn, setOnAddColumn] = useState(false);
 
     useEffect(() => {
         // find board
@@ -73,10 +75,21 @@ export const Board = ({ match }: RouteComponentProps<RouteInfo>) => {
                 cardIds: [],
             };
             columnsDispatch({ type: 'ADD_COLUMN', payload: column });
+            setOnAddColumn(true);
         }
     };
 
-    const onAddCard = ({
+    const updateColumn = (column: IColumn) => {
+        columnsDispatch({ type: 'UPDATE_COLUMN', payload: column });
+        setOnAddColumn(false);
+    };
+
+    const deleteColumn = (id: string) => {
+        columnsDispatch({ type: 'DELETE_COLUMN', payload: id });
+        setOnAddColumn(false);
+    };
+
+    const addCard = ({
         updatedColumn,
         card,
     }: {
@@ -111,14 +124,18 @@ export const Board = ({ match }: RouteComponentProps<RouteInfo>) => {
                     <Column
                         column={column}
                         cards={cards}
-                        addCard={onAddCard}
+                        addCard={addCard}
+                        updateColumn={updateColumn}
+                        deleteColumn={deleteColumn}
                         key={column.id}
                     />
                 ))}
 
-                <div className="board__add" onClick={addColumn}>
-                    Add Column
-                </div>
+                {!onAddColumn && (
+                    <div className="board__add" onClick={addColumn}>
+                        Add Column
+                    </div>
+                )}
             </div>
         </div>
     );
