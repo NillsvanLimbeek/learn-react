@@ -13,6 +13,7 @@ export const InlineEdit = ({ value, onBlur }: Props) => {
 
     useEffect(() => {
         input?.current?.focus();
+        input?.current?.select();
 
         return () => {
             input?.current?.blur();

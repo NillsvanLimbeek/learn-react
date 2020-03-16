@@ -22,7 +22,7 @@ export const BoardsMenu = ({ boards, removeBoard, favoriteBoard }: Props) => {
     const [sideMenu, setSideMenu] = useState(false);
     const [search, setSearch] = useState('');
     const [filtererdBoards, setFilteredBoards] = useState<IBoard[]>([]);
-    const [favoriteBoards, setfavoriteBoards] = useState<IBoard[]>([]);
+    const [favoriteBoards, setFavoriteBoards] = useState<IBoard[]>([]);
     const [modal, setModal] = useState(false);
 
     const history = useHistory();
@@ -42,8 +42,10 @@ export const BoardsMenu = ({ boards, removeBoard, favoriteBoard }: Props) => {
         const favoriteBoards = boards.filter((board) => board.favorite);
 
         if (favoriteBoards.length) {
-            setfavoriteBoards(favoriteBoards);
+            setFavoriteBoards(favoriteBoards);
         }
+
+        return () => setFavoriteBoards([]);
     }, [boards]);
 
     const redirectToBoard = (id: string) => {

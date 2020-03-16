@@ -44,6 +44,16 @@
 .column__title {
     display: flex;
     align-items: center;
+
+    width: 100%;
+}
+
+.column__title h4 {
+    width: 100%;
+
+    padding: 5px 1rem;
+    border: 0.25px solid transparent;
+    cursor: pointer;
 }
 
 .column__add {
