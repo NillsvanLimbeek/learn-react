@@ -11,18 +11,12 @@ export default (state: State, action: Action) => {
                     (board) => board.id !== action.payload,
                 ),
             };
-        case 'FAVORITE_BOARD':
-            const board = state.boards.find(
-                (board) => board.id === action.payload,
-            );
-
-            if (board) {
-                board.favorite = true;
-            }
-
+        case 'UPDATE_BOARD':
             return {
                 ...state,
-                boards: [...state.boards],
+                boards: state.boards.map((board) =>
+                    board.id === action.payload.id ? action.payload : board,
+                ),
             };
         default:
             return state;

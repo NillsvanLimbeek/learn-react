@@ -26,7 +26,14 @@ export const Navbar = () => {
     };
 
     const favoriteBoard = (id: string) => {
-        boardsDispatch({ type: 'FAVORITE_BOARD', payload: id });
+        const board = boards.find((board) => board.id === id);
+
+        if (board) {
+            boardsDispatch({
+                type: 'UPDATE_BOARD',
+                payload: { ...board, favorite: !board.favorite },
+            });
+        }
     };
 
     return (

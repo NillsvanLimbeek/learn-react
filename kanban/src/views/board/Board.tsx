@@ -3,7 +3,10 @@ import { RouteComponentProps } from 'react-router-dom';
 
 import './Board.scss';
 
-import { useBoardsState } from '../../context/boards/boardsContext';
+import {
+    useBoardsState,
+    useBoardsDispatch,
+} from '../../context/boards/boardsContext';
 import {
     useColumnsState,
     useColumnsDispatch,
@@ -20,6 +23,7 @@ import { IColumn } from '../../data/types/Column';
 import { ICard } from '../../data/types/Card';
 
 import { Column } from '../../components/column/Column';
+import { BoardSquare } from '../../components/board-square/BoardSquare';
 
 type RouteInfo = {
     id: string;
@@ -28,6 +32,7 @@ type RouteInfo = {
 export const Board = ({ match }: RouteComponentProps<RouteInfo>) => {
     // boards context
     const { boards } = useBoardsState();
+    const boardsDispatch = useBoardsDispatch();
 
     // columns context
     const { columns } = useColumnsState();
@@ -65,6 +70,15 @@ export const Board = ({ match }: RouteComponentProps<RouteInfo>) => {
             setFilteredColumns([]);
         };
     }, [match, boards, columns]);
+
+    const makeFavorite = (favorite: boolean) => {
+        if (board) {
+            boardsDispatch({
+                type: 'UPDATE_BOARD',
+                payload: { ...board, favorite },
+            });
+        }
+    };
 
     const addColumn = () => {
         if (board) {
@@ -104,12 +118,10 @@ export const Board = ({ match }: RouteComponentProps<RouteInfo>) => {
         <div className="board">
             {board && (
                 <div className="board__header">
-                    <div
-                        className="board__square"
-                        style={{
-                            backgroundColor: `${board.color}`,
-                            boxShadow: `2px 2px 7px 2px ${board.color}4d`,
-                        }}
+                    <BoardSquare
+                        color={board.color}
+                        favorite={board.favorite}
+                        makeFavorite={makeFavorite}
                     />
 
                     <div className="board__info">
