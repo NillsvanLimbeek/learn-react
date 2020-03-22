@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, Fragment } from 'react';
 import { RouteComponentProps } from 'react-router-dom';
+import { DragDropContext, Droppable, DropResult } from 'react-beautiful-dnd';
 
 import './Board.scss';
 
@@ -53,17 +54,15 @@ export const Board = ({ match }: RouteComponentProps<RouteInfo>) => {
         // find board
         const board = boards.find((board) => board.id === match.params.id);
 
-        if (board) {
-            setBoard(board);
+        board ? setBoard(board) : setBoard(null);
 
-            // find columns
-            const filteredColumns = columns.filter(
-                (column) => column.boardId === board.id,
-            );
+        // find columns
+        const filteredColumns: any = board?.columnIds.map((id) => {
+            return columns.find((column) => column.id === id);
+        });
 
-            if (filteredColumns.length) {
-                setFilteredColumns(filteredColumns);
-            }
+        if (filteredColumns) {
+            setFilteredColumns(filteredColumns);
         }
 
         return () => {
@@ -82,13 +81,18 @@ export const Board = ({ match }: RouteComponentProps<RouteInfo>) => {
 
     const addColumn = () => {
         if (board) {
+            const id = generateGuid();
             const column = {
                 title: '',
-                id: generateGuid(),
+                id,
                 boardId: board.id,
                 cardIds: [],
             };
+
+            const newBoard = { ...board, columnIds: [...board.columnIds, id] };
+
             columnsDispatch({ type: 'ADD_COLUMN', payload: column });
+            boardsDispatch({ type: 'UPDATE_BOARD', payload: newBoard });
             setOnAddColumn(true);
         }
     };
@@ -114,41 +118,92 @@ export const Board = ({ match }: RouteComponentProps<RouteInfo>) => {
         cardsDispatch({ type: 'ADD_CARD', payload: card });
     };
 
+    const onDragEnd = (result: DropResult) => {
+        const { source, destination, draggableId } = result;
+
+        if (board && destination) {
+            // new columnIds
+            const newColumnIds = Array.from(board.columnIds);
+            newColumnIds.splice(source.index, 1);
+            newColumnIds.splice(destination?.index, 0, draggableId);
+
+            //
+            const filteredColumns: any = newColumnIds.map((id) => {
+                return columns.find((column) => column.id === id);
+            });
+
+            if (filteredColumns) {
+                setFilteredColumns(filteredColumns);
+            }
+
+            // new board
+            const newBoard = { ...board, columnIds: newColumnIds };
+
+            // update board
+            // timeout for ui flicker
+            setTimeout(() => {
+                boardsDispatch({ type: 'UPDATE_BOARD', payload: newBoard });
+            }, 250);
+        }
+    };
+
     return (
         <div className="board">
             {board && (
-                <div className="board__header">
-                    <BoardSquare
-                        color={board.color}
-                        favorite={board.favorite}
-                        makeFavorite={makeFavorite}
-                    />
+                <Fragment>
+                    <div className="board__header">
+                        <BoardSquare
+                            color={board.color}
+                            favorite={board.favorite}
+                            makeFavorite={makeFavorite}
+                        />
 
-                    <div className="board__info">
-                        <h3>{board.title}</h3>
-                        <p>Nills</p>
+                        <div className="board__info">
+                            <h3>{board.title}</h3>
+                            <p>Nills</p>
+                        </div>
                     </div>
-                </div>
+
+                    <DragDropContext onDragEnd={onDragEnd}>
+                        <div className="board__columns">
+                            <Droppable
+                                droppableId={board.id}
+                                direction={'horizontal'}
+                            >
+                                {(provided) => (
+                                    <div
+                                        className="board__columns"
+                                        ref={provided.innerRef}
+                                        {...provided.droppableProps}
+                                    >
+                                        {filteredColumns?.map(
+                                            (column, index) => (
+                                                <Column
+                                                    column={column}
+                                                    cards={cards}
+                                                    addCard={addCard}
+                                                    updateColumn={updateColumn}
+                                                    deleteColumn={deleteColumn}
+                                                    key={column.id}
+                                                    index={index}
+                                                />
+                                            ),
+                                        )}
+
+                                        {provided.placeholder}
+                                    </div>
+                                )}
+                            </Droppable>
+
+                            {!onAddColumn && (
+                                <div className="board__add" onClick={addColumn}>
+                                    Add Column
+                                </div>
+                            )}
+                        </div>
+                    </DragDropContext>
+                </Fragment>
             )}
-
-            <div className="board__columns">
-                {filteredColumns?.map((column) => (
-                    <Column
-                        column={column}
-                        cards={cards}
-                        addCard={addCard}
-                        updateColumn={updateColumn}
-                        deleteColumn={deleteColumn}
-                        key={column.id}
-                    />
-                ))}
-
-                {!onAddColumn && (
-                    <div className="board__add" onClick={addColumn}>
-                        Add Column
-                    </div>
-                )}
-            </div>
         </div>
     );
 };

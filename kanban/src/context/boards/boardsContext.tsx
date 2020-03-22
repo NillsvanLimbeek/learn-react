@@ -11,14 +11,17 @@ const initalState: State = {
             color: '#4860ff',
             favorite: false,
             id: '30165652-87a1-d438-6c08-7c14a5b7c5ae',
-            columnIds: [],
+            columnIds: [
+                'fd97350a-3875-45ad-822a-74a5c59ff0e9',
+                'b3f095aa-f4a7-4978-b614-c5406376ed72',
+            ],
         },
         {
             title: 'Board 2',
             color: '#fb617f',
             favorite: false,
             id: '88c8033c-7a34-4c73-b9f0-6120a82a82f5',
-            columnIds: [],
+            columnIds: ['6ff65853-d111-448f-baa9-1070bed254e4'],
         },
         {
             title: 'Board 3',

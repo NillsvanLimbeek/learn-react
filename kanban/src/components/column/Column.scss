@@ -7,10 +7,7 @@
     background: var(--color-white);
     border-radius: var(--border-radius);
     box-shadow: 3px 3px 3px 1px rgba(128, 128, 128, 0.25);
-
-    &:not(:last-child) {
-        margin-right: 2rem;
-    }
+    margin-right: 2rem;
 }
 
 .column__header {
