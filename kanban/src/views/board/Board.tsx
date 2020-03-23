@@ -82,6 +82,7 @@ export const Board = ({ match }: RouteComponentProps<RouteInfo>) => {
     const addColumn = () => {
         if (board) {
             const id = generateGuid();
+
             const column = {
                 title: '',
                 id,
@@ -119,19 +120,24 @@ export const Board = ({ match }: RouteComponentProps<RouteInfo>) => {
     };
 
     const onDragEnd = (result: DropResult) => {
+        result.type === 'column' ? columnDrag(result) : cardDrag(result);
+    };
+
+    const columnDrag = (result: DropResult) => {
         const { source, destination, draggableId } = result;
 
         if (board && destination) {
             // new columnIds
             const newColumnIds = Array.from(board.columnIds);
             newColumnIds.splice(source.index, 1);
-            newColumnIds.splice(destination?.index, 0, draggableId);
+            newColumnIds.splice(destination.index, 0, draggableId);
 
-            //
+            // new columns order
             const filteredColumns: any = newColumnIds.map((id) => {
                 return columns.find((column) => column.id === id);
             });
 
+            // update local columns order
             if (filteredColumns) {
                 setFilteredColumns(filteredColumns);
             }
@@ -145,6 +151,51 @@ export const Board = ({ match }: RouteComponentProps<RouteInfo>) => {
                 boardsDispatch({ type: 'UPDATE_BOARD', payload: newBoard });
             }, 250);
         }
+    };
+
+    const cardDrag = (result: DropResult) => {
+        const { source, destination, draggableId } = result;
+
+        // drag between the same column
+        if (source.droppableId === destination?.droppableId) {
+            const column = columns.find(
+                (column) => column.id === source.droppableId,
+            );
+
+            if (column) {
+                // new cardIds
+                const newCardIds = Array.from(column.cardIds);
+                newCardIds.splice(source.index, 1);
+                newCardIds.splice(destination.index, 0, draggableId);
+
+                // new column
+                if (filteredColumns) {
+                    const newColumn = { ...column, cardIds: newCardIds };
+                    const newColumnIndex = filteredColumns
+                        .map((column) => column.id)
+                        .indexOf(newColumn.id);
+
+                    // update local state
+                    const newColumns = Array.from(filteredColumns);
+                    newColumns.splice(newColumnIndex, 1, newColumn);
+
+                    setFilteredColumns(newColumns);
+
+                    // update column
+                    setTimeout(() => {
+                        columnsDispatch({
+                            type: 'UPDATE_COLUMN',
+                            payload: newColumn,
+                        });
+                    }, 250);
+                }
+
+                return;
+            }
+        }
+
+        // drag between different columns
+        console.log('different columns');
     };
 
     return (
@@ -169,6 +220,7 @@ export const Board = ({ match }: RouteComponentProps<RouteInfo>) => {
                             <Droppable
                                 droppableId={board.id}
                                 direction={'horizontal'}
+                                type="column"
                             >
                                 {(provided) => (
                                     <div

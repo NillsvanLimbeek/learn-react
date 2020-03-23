@@ -11,7 +11,7 @@ const initialState: State = {
             id: 'fd97350a-3875-45ad-822a-74a5c59ff0e9',
             boardId: '30165652-87a1-d438-6c08-7c14a5b7c5ae',
             cardIds: [
-                '8e4a8d3d-23eb-4450-bde7-6c919c3e6e20',
+                '67061e04-da50-49da-b61c-46be7ee1eb1f',
                 'fd4ae017-f106-4f8a-bf10-a8a7ce09c342',
             ],
         },

@@ -1,10 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import {
-    DragDropContext,
-    Draggable,
-    DropResult,
-    Droppable,
-} from 'react-beautiful-dnd';
+import { Draggable, Droppable } from 'react-beautiful-dnd';
 
 import './Column.scss';
 
@@ -14,7 +9,6 @@ import { IColumn } from '../../data/types/Column';
 import { ICard } from '../../data/types/Card';
 
 import { InlineEdit } from '../inline-edit/InlineEdit';
-import { CardList } from '../card-list/CardList';
 import { Card } from '../card/Card';
 
 type Props = {
@@ -41,21 +35,21 @@ export const Column = ({
     deleteColumn,
 }: Props) => {
     // state
-    const [filteredCards, setFilteredCards] = useState<ICard[]>([]);
+    const [filteredCards, setFilteredCards] = useState<ICard[] | null>(null);
     const [editTitle, setEditTitle] = useState(false);
 
     // find cards
     useEffect(() => {
-        const filteredCards = cards.filter(
-            (card) => card.columnId === column.id,
-        );
+        const filteredCards: any = column.cardIds.map((id) => {
+            return cards.find((card) => card.id === id);
+        });
 
-        if (filteredCards.length) {
+        if (filteredCards) {
             setFilteredCards(filteredCards);
         }
 
         return () => {
-            setFilteredCards([]);
+            setFilteredCards(null);
         };
     }, [column, cards]);
 
@@ -121,7 +115,7 @@ export const Column = ({
                                 ref={provided.innerRef}
                                 {...provided.droppableProps}
                             >
-                                {filteredCards.map((card, index) => (
+                                {filteredCards?.map((card, index) => (
                                     <Card
                                         card={card}
                                         key={card.id}
