@@ -17,6 +17,9 @@ import {
     useCardsDispatch,
 } from '../../context/cards/cardsContext';
 
+import { useColumnDrag } from '../../hooks/useColumnDrag';
+import { useCardDrag } from '../../hooks/useCardDrag';
+
 import { generateGuid } from '../../utils/guid';
 
 import { IBoard } from '../../data/types/Board';
@@ -43,11 +46,16 @@ export const Board = ({ match }: RouteComponentProps<RouteInfo>) => {
     const { cards } = useCardsState();
     const cardsDispatch = useCardsDispatch();
 
+    // drag hooks
+    const { updateColumns, updateBoard } = useColumnDrag();
+    const { updateDraggedCards, updateDraggedColumn } = useCardDrag();
+
     // state
     const [board, setBoard] = useState<IBoard | null>(null);
     const [filteredColumns, setFilteredColumns] = useState<IColumn[] | null>(
         null,
     );
+    const [filteredCards, setFilteredCards] = useState<ICard[] | null>(null);
     const [onAddColumn, setOnAddColumn] = useState(false);
 
     useEffect(() => {
@@ -124,122 +132,30 @@ export const Board = ({ match }: RouteComponentProps<RouteInfo>) => {
     };
 
     const columnDrag = (result: DropResult) => {
-        const { source, destination, draggableId } = result;
-
-        if (board && destination) {
-            // new columnIds
-            const newColumnIds = Array.from(board.columnIds);
-            newColumnIds.splice(source.index, 1);
-            newColumnIds.splice(destination.index, 0, draggableId);
-
-            // new columns order
-            const filteredColumns: any = newColumnIds.map((id) => {
-                return columns.find((column) => column.id === id);
-            });
-
-            // update local columns order
-            if (filteredColumns) {
-                setFilteredColumns(filteredColumns);
-            }
-
-            // new board
-            const newBoard = { ...board, columnIds: newColumnIds };
+        if (board) {
+            const newColumns = updateColumns(board, columns, result);
+            setFilteredColumns(newColumns);
 
             // update board
-            // timeout for ui flicker
-            setTimeout(() => {
+            const newBoard = updateBoard(board, result);
+
+            if (newBoard) {
                 boardsDispatch({ type: 'UPDATE_BOARD', payload: newBoard });
-            }, 250);
+            }
         }
     };
 
     const cardDrag = (result: DropResult) => {
-        const { source, destination, draggableId } = result;
+        const column = columns.find(
+            (column) => column.id === result.source.droppableId,
+        );
 
-        // drag between the same column
-        if (source.droppableId === destination?.droppableId) {
-            const column = columns.find(
-                (column) => column.id === source.droppableId,
-            );
+        if (column) {
+            const newColumn = updateDraggedColumn(column, result);
 
-            if (column) {
-                // new cardIds
-                const newCardIds = Array.from(column.cardIds);
-                newCardIds.splice(source.index, 1);
-                newCardIds.splice(destination.index, 0, draggableId);
-
-                // new column
-                if (filteredColumns) {
-                    const newColumn = { ...column, cardIds: newCardIds };
-                    const newColumnIndex = filteredColumns
-                        .map((column) => column.id)
-                        .indexOf(newColumn.id);
-
-                    // update local state
-                    const newColumns = Array.from(filteredColumns);
-                    newColumns.splice(newColumnIndex, 1, newColumn);
-
-                    setFilteredColumns(newColumns);
-
-                    // update column
-                    setTimeout(() => {
-                        columnsDispatch({
-                            type: 'UPDATE_COLUMN',
-                            payload: newColumn,
-                        });
-                    }, 250);
-                }
-
-                return;
+            if (newColumn) {
+                columnsDispatch({ type: 'UPDATE_COLUMN', payload: newColumn });
             }
-        }
-
-        // drag between different columns
-        const origin = columns.find(
-            (column) => column.id === source.droppableId,
-        );
-        const dest = columns.find(
-            (column) => column.id === destination?.droppableId,
-        );
-
-        if (filteredColumns && destination && origin && dest) {
-            // new origin column
-            const originCardIds = Array.from(origin.cardIds);
-            originCardIds.splice(source.index, 1);
-
-            const newOrigin: IColumn = { ...origin, cardIds: originCardIds };
-            const newOriginIndex = filteredColumns
-                .map((column) => column.id)
-                .indexOf(newOrigin.id);
-
-            // new dest column
-            const destCardIds = Array.from(dest.cardIds);
-            destCardIds.splice(destination.index, 0, draggableId);
-
-            const newDest: IColumn = { ...dest, cardIds: destCardIds };
-            const newDestIndex = filteredColumns
-                .map((column) => column.id)
-                .indexOf(newDest.id);
-
-            // update local state
-            const newColumns = Array.from(filteredColumns);
-            newColumns.splice(newDestIndex, 1, newDest);
-            newColumns.splice(newOriginIndex, 1, newOrigin);
-
-            setFilteredColumns(newColumns);
-
-            // update columns
-            setTimeout(() => {
-                columnsDispatch({
-                    type: 'UPDATE_COLUMN',
-                    payload: newOrigin,
-                });
-
-                columnsDispatch({
-                    type: 'UPDATE_COLUMN',
-                    payload: newDest,
-                });
-            }, 0);
         }
     };
 
@@ -277,7 +193,7 @@ export const Board = ({ match }: RouteComponentProps<RouteInfo>) => {
                                             (column, index) => (
                                                 <Column
                                                     column={column}
-                                                    cards={cards}
+                                                    cards={filteredCards}
                                                     addCard={addCard}
                                                     updateColumn={updateColumn}
                                                     deleteColumn={deleteColumn}
