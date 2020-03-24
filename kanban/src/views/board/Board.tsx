@@ -195,7 +195,52 @@ export const Board = ({ match }: RouteComponentProps<RouteInfo>) => {
         }
 
         // drag between different columns
-        console.log('different columns');
+        const origin = columns.find(
+            (column) => column.id === source.droppableId,
+        );
+        const dest = columns.find(
+            (column) => column.id === destination?.droppableId,
+        );
+
+        if (filteredColumns && destination && origin && dest) {
+            // new origin column
+            const originCardIds = Array.from(origin.cardIds);
+            originCardIds.splice(source.index, 1);
+
+            const newOrigin: IColumn = { ...origin, cardIds: originCardIds };
+            const newOriginIndex = filteredColumns
+                .map((column) => column.id)
+                .indexOf(newOrigin.id);
+
+            // new dest column
+            const destCardIds = Array.from(dest.cardIds);
+            destCardIds.splice(destination.index, 0, draggableId);
+
+            const newDest: IColumn = { ...dest, cardIds: destCardIds };
+            const newDestIndex = filteredColumns
+                .map((column) => column.id)
+                .indexOf(newDest.id);
+
+            // update local state
+            const newColumns = Array.from(filteredColumns);
+            newColumns.splice(newDestIndex, 1, newDest);
+            newColumns.splice(newOriginIndex, 1, newOrigin);
+
+            setFilteredColumns(newColumns);
+
+            // update columns
+            setTimeout(() => {
+                columnsDispatch({
+                    type: 'UPDATE_COLUMN',
+                    payload: newOrigin,
+                });
+
+                columnsDispatch({
+                    type: 'UPDATE_COLUMN',
+                    payload: newDest,
+                });
+            }, 0);
+        }
     };
 
     return (
