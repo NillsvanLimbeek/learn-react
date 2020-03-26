@@ -48,14 +48,13 @@ export const Board = ({ match }: RouteComponentProps<RouteInfo>) => {
 
     // drag hooks
     const { updateColumns, updateBoard } = useColumnDrag();
-    const { updateDraggedCards, updateDraggedColumn } = useCardDrag();
+    const { dragInSameColumn, dragInDifferentColumns } = useCardDrag();
 
     // state
     const [board, setBoard] = useState<IBoard | null>(null);
     const [filteredColumns, setFilteredColumns] = useState<IColumn[] | null>(
         null,
     );
-    const [filteredCards, setFilteredCards] = useState<ICard[] | null>(null);
     const [onAddColumn, setOnAddColumn] = useState(false);
 
     useEffect(() => {
@@ -106,16 +105,19 @@ export const Board = ({ match }: RouteComponentProps<RouteInfo>) => {
         }
     };
 
+    // TODO move to column component
     const updateColumn = (column: IColumn) => {
         columnsDispatch({ type: 'UPDATE_COLUMN', payload: column });
         setOnAddColumn(false);
     };
 
+    // TODO move to column component
     const deleteColumn = (id: string) => {
         columnsDispatch({ type: 'DELETE_COLUMN', payload: id });
         setOnAddColumn(false);
     };
 
+    // TODO move to column component
     const addCard = ({
         updatedColumn,
         card,
@@ -145,16 +147,39 @@ export const Board = ({ match }: RouteComponentProps<RouteInfo>) => {
         }
     };
 
+    // TODO ui flicker
+    // has to do with local state of column
+    // see columnDrag()
     const cardDrag = (result: DropResult) => {
-        const column = columns.find(
-            (column) => column.id === result.source.droppableId,
-        );
+        const { source, destination } = result;
 
-        if (column) {
-            const newColumn = updateDraggedColumn(column, result);
+        // drag in same column
+        if (source.droppableId === destination?.droppableId) {
+            const column = columns.find(
+                (column) => column.id === result.source.droppableId,
+            );
 
-            if (newColumn) {
-                columnsDispatch({ type: 'UPDATE_COLUMN', payload: newColumn });
+            if (column) {
+                const newColumn = dragInSameColumn(column, result);
+
+                if (newColumn) {
+                    columnsDispatch({
+                        type: 'UPDATE_COLUMN',
+                        payload: newColumn,
+                    });
+                }
+            }
+        } else {
+            // drag in different columns
+            const newColumns = dragInDifferentColumns(columns, result);
+
+            if (newColumns) {
+                newColumns.forEach((column) => {
+                    columnsDispatch({
+                        type: 'UPDATE_COLUMN',
+                        payload: column,
+                    });
+                });
             }
         }
     };
@@ -193,7 +218,7 @@ export const Board = ({ match }: RouteComponentProps<RouteInfo>) => {
                                             (column, index) => (
                                                 <Column
                                                     column={column}
-                                                    cards={filteredCards}
+                                                    cards={cards}
                                                     addCard={addCard}
                                                     updateColumn={updateColumn}
                                                     deleteColumn={deleteColumn}
