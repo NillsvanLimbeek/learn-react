@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Draggable, Droppable } from 'react-beautiful-dnd';
 
 import './Column.scss';
 
@@ -13,6 +14,7 @@ import { Card } from '../card/Card';
 type Props = {
     column: IColumn;
     cards: ICard[];
+    index: number;
     addCard: ({
         updatedColumn,
         card,
@@ -27,26 +29,27 @@ type Props = {
 export const Column = ({
     column,
     cards,
+    index,
     addCard,
     updateColumn,
     deleteColumn,
 }: Props) => {
     // state
-    const [filteredCards, setFilteredCards] = useState<ICard[]>([]);
+    const [filteredCards, setFilteredCards] = useState<ICard[] | null>(null);
     const [editTitle, setEditTitle] = useState(false);
 
     // find cards
     useEffect(() => {
-        const filteredCards = cards.filter(
-            (card) => card.columnId === column.id,
-        );
+        const filteredCards: any = column.cardIds.map((id) => {
+            return cards.find((card) => card.id === id);
+        });
 
-        if (filteredCards.length) {
+        if (filteredCards) {
             setFilteredCards(filteredCards);
         }
 
         return () => {
-            setFilteredCards([]);
+            setFilteredCards(null);
         };
     }, [column, cards]);
 
@@ -76,35 +79,60 @@ export const Column = ({
     };
 
     return (
-        <div className="column">
-            <div className="column__header">
-                <div className="column__title">
-                    <i className="far fa-circle" />
+        <Draggable draggableId={column.id} index={index}>
+            {(provided) => (
+                <div
+                    className="column"
+                    ref={provided.innerRef}
+                    {...provided.draggableProps}
+                >
+                    <div
+                        className="column__header"
+                        {...provided.dragHandleProps}
+                    >
+                        <div className="column__title">
+                            <i className="far fa-circle" />
 
-                    {column.title.length && !editTitle ? (
-                        <h4 onClick={() => setEditTitle(true)}>
-                            {column.title}
-                        </h4>
-                    ) : (
-                        <InlineEdit
-                            value={column.title}
-                            onBlur={setColumnTitle}
-                        />
-                    )}
+                            {column.title.length && !editTitle ? (
+                                <h4 onClick={() => setEditTitle(true)}>
+                                    {column.title}
+                                </h4>
+                            ) : (
+                                <InlineEdit
+                                    value={column.title}
+                                    onBlur={setColumnTitle}
+                                />
+                            )}
+                        </div>
+
+                        <i className="fas fa-ellipsis-h" />
+                    </div>
+
+                    <Droppable droppableId={column.id} type="card">
+                        {(provided) => (
+                            <div
+                                className="column__card-list"
+                                ref={provided.innerRef}
+                                {...provided.droppableProps}
+                            >
+                                {filteredCards?.map((card, index) => (
+                                    <Card
+                                        card={card}
+                                        key={card.id}
+                                        index={index}
+                                    />
+                                ))}
+
+                                {provided.placeholder}
+                            </div>
+                        )}
+                    </Droppable>
+
+                    <p className="column__add" onClick={onAddCard}>
+                        Add Card
+                    </p>
                 </div>
-
-                <i className="fas fa-ellipsis-h" />
-            </div>
-
-            <div className="column__cards">
-                {filteredCards.map((card) => (
-                    <Card card={card} key={card.id} />
-                ))}
-
-                <p className="column__add" onClick={onAddCard}>
-                    Add Card
-                </p>
-            </div>
-        </div>
+            )}
+        </Draggable>
     );
 };

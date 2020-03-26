@@ -1,4 +1,7 @@
 .column {
+    display: flex;
+    flex-direction: column;
+
     width: 20rem;
 
     align-self: flex-start;
@@ -7,10 +10,7 @@
     background: var(--color-white);
     border-radius: var(--border-radius);
     box-shadow: 3px 3px 3px 1px rgba(128, 128, 128, 0.25);
-
-    &:not(:last-child) {
-        margin-right: 2rem;
-    }
+    margin-right: 2rem;
 }
 
 .column__header {
@@ -46,6 +46,8 @@
     align-items: center;
 
     width: 100%;
+
+    margin-bottom: 2.5rem;
 }
 
 .column__title h4 {
@@ -54,6 +56,15 @@
     padding: 5px 1rem;
     border: 0.25px solid transparent;
     cursor: pointer;
+}
+
+.column__card-list {
+    // display: flex;
+    // flex-direction: column;
+
+    // min-height: 100px;
+
+    background-color: #f3f3f3;
 }
 
 .column__add {

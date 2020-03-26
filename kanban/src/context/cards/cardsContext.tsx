@@ -11,9 +11,6 @@ const initialState: State = {
             id: '67061e04-da50-49da-b61c-46be7ee1eb1f',
             columnId: 'fd97350a-3875-45ad-822a-74a5c59ff0e9',
             labels: ['red', 'blue', 'yellow'],
-            // TODO
-            // description
-            // attachments
         },
         {
             title: 'Card 2',

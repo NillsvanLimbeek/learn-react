@@ -2,15 +2,9 @@
     padding: 1rem;
     border: 1px solid var(--color-grey-light);
     border-radius: var(--border-radius);
+    background-color: var(--color-white);
+    margin-bottom: 1.5rem;
     cursor: pointer;
-
-    &:first-child {
-        margin-top: 2.5rem;
-    }
-
-    &:not(:last-child) {
-        margin-bottom: 1.5rem;
-    }
 
     &:hover {
         border-color: var(--color-grey);
