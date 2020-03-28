@@ -4,7 +4,7 @@ import './CardModal.scss';
 
 import {
     useCardsState,
-    useCardsDispatch,
+    // useCardsDispatch,
 } from '../../../context/cards/cardsContext';
 import { useColumnsState } from '../../../context/columns/columnsContext';
 

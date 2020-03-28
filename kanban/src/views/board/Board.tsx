@@ -12,10 +12,7 @@ import {
     useColumnsState,
     useColumnsDispatch,
 } from '../../context/columns/columnsContext';
-import {
-    useCardsState,
-    useCardsDispatch,
-} from '../../context/cards/cardsContext';
+import { useCardsState } from '../../context/cards/cardsContext';
 
 import { useColumnDrag } from '../../hooks/useColumnDrag';
 import { useCardDrag } from '../../hooks/useCardDrag';
@@ -24,9 +21,8 @@ import { generateGuid } from '../../utils/guid';
 
 import { IBoard } from '../../data/types/Board';
 import { IColumn } from '../../data/types/Column';
-import { ICard } from '../../data/types/Card';
 
-import { Column } from '../../components/column/Column';
+import { Column } from './column/Column';
 import { BoardSquare } from '../../components/board-square/BoardSquare';
 
 type RouteInfo = {
@@ -44,7 +40,6 @@ export const Board = ({ match }: RouteComponentProps<RouteInfo>) => {
 
     // cards context
     const { cards } = useCardsState();
-    const cardsDispatch = useCardsDispatch();
 
     // drag hooks
     const { updateColumns, updateBoard } = useColumnDrag();
@@ -52,10 +47,8 @@ export const Board = ({ match }: RouteComponentProps<RouteInfo>) => {
 
     // state
     const [board, setBoard] = useState<IBoard | null>(null);
-    const [filteredColumns, setFilteredColumns] = useState<IColumn[] | null>(
-        null,
-    );
-    const [onAddColumn, setOnAddColumn] = useState(false);
+    const [boardColumns, setBoardColumns] = useState<IColumn[] | null>(null);
+    const [newColumn, setNewColumn] = useState(false);
 
     useEffect(() => {
         // find board
@@ -64,16 +57,16 @@ export const Board = ({ match }: RouteComponentProps<RouteInfo>) => {
         board ? setBoard(board) : setBoard(null);
 
         // find columns
-        const filteredColumns: any = board?.columnIds.map((id) => {
+        const boardColumns: any = board?.columnIds.map((id) => {
             return columns.find((column) => column.id === id);
         });
 
-        if (filteredColumns) {
-            setFilteredColumns(filteredColumns);
+        if (boardColumns) {
+            setBoardColumns(boardColumns);
         }
 
         return () => {
-            setFilteredColumns([]);
+            setBoardColumns(null);
         };
     }, [match, boards, columns]);
 
@@ -101,32 +94,8 @@ export const Board = ({ match }: RouteComponentProps<RouteInfo>) => {
 
             columnsDispatch({ type: 'ADD_COLUMN', payload: column });
             boardsDispatch({ type: 'UPDATE_BOARD', payload: newBoard });
-            setOnAddColumn(true);
+            setNewColumn(true);
         }
-    };
-
-    // TODO move to column component
-    const updateColumn = (column: IColumn) => {
-        columnsDispatch({ type: 'UPDATE_COLUMN', payload: column });
-        setOnAddColumn(false);
-    };
-
-    // TODO move to column component
-    const deleteColumn = (id: string) => {
-        columnsDispatch({ type: 'DELETE_COLUMN', payload: id });
-        setOnAddColumn(false);
-    };
-
-    // TODO move to column component
-    const addCard = ({
-        updatedColumn,
-        card,
-    }: {
-        updatedColumn: IColumn;
-        card: ICard;
-    }) => {
-        columnsDispatch({ type: 'UPDATE_COLUMN', payload: updatedColumn });
-        cardsDispatch({ type: 'ADD_CARD', payload: card });
     };
 
     const onDragEnd = (result: DropResult) => {
@@ -136,7 +105,7 @@ export const Board = ({ match }: RouteComponentProps<RouteInfo>) => {
     const columnDrag = (result: DropResult) => {
         if (board) {
             const newColumns = updateColumns(board, columns, result);
-            setFilteredColumns(newColumns);
+            setBoardColumns(newColumns);
 
             // update board
             const newBoard = updateBoard(board, result);
@@ -214,26 +183,24 @@ export const Board = ({ match }: RouteComponentProps<RouteInfo>) => {
                                         ref={provided.innerRef}
                                         {...provided.droppableProps}
                                     >
-                                        {filteredColumns?.map(
-                                            (column, index) => (
-                                                <Column
-                                                    column={column}
-                                                    cards={cards}
-                                                    addCard={addCard}
-                                                    updateColumn={updateColumn}
-                                                    deleteColumn={deleteColumn}
-                                                    key={column.id}
-                                                    index={index}
-                                                />
-                                            ),
-                                        )}
+                                        {boardColumns?.map((column, index) => (
+                                            <Column
+                                                column={column}
+                                                cards={cards}
+                                                key={column.id}
+                                                index={index}
+                                                setNewColumn={(e) =>
+                                                    setNewColumn(e)
+                                                }
+                                            />
+                                        ))}
 
                                         {provided.placeholder}
                                     </div>
                                 )}
                             </Droppable>
 
-                            {!onAddColumn && (
+                            {!newColumn && (
                                 <div className="board__add" onClick={addColumn}>
                                     Add Column
                                 </div>
